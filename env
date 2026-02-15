@@ -1,0 +1,318 @@
+# ============================================
+# 🚀 NODE ENVIRONMENT - COMPLETE CONFIGURATION
+# 1500 COINS REFERRAL BONUS + WITHDRAWAL SYSTEM
+# $15 MINIMUM, 15TH ONLY, USDT-BNB TRX
+# ============================================
+
+# ============================================
+# 🚀 NODE ENVIRONMENT
+# ============================================
+NODE_ENV=development
+PORT=3000
+FRONTEND_URL=http://localhost:3001
+
+# ============================================
+# 🗄️ MONGODB DATABASE
+# ============================================
+MONGODB_URI=mongodb://localhost:27017/coinmaster_pro
+MONGODB_OPTIONS=useNewUrlParser=true&useUnifiedTopology=true
+
+# ============================================
+# 🔐 AUTHENTICATION & SECURITY
+# ============================================
+JWT_SECRET=coinmaster_super_secret_jwt_key_2024_withdrawal_15th
+JWT_EXPIRE=30d
+SESSION_SECRET=coinmaster_session_secret_key_withdrawal_system_2024
+BCRYPT_ROUNDS=10
+
+# ============================================
+# 🤖 TELEGRAM BOT CONFIGURATION
+# ============================================
+TELEGRAM_BOT_TOKEN=7834567890:AAHd8k2j4h5k6j7h8g9f0d1s2a3q4w5e6r7t8y9
+BOT_USERNAME=CoinMasterProBot
+TELEGRAM_CHAT_ID=
+TELEGRAM_WEBHOOK_URL=https://coinmaster.pro/webhook
+TELEGRAM_MINI_APP_URL=https://t.me/CoinMasterProBot/app
+
+# ============================================
+# 💰 COIN ECONOMY SETTINGS - 1500 REFERRAL BONUS
+# ============================================
+# EXCHANGE RATE: 5000 coins = $1 USD (FIXED)
+COIN_TO_USD_RATE=5000
+
+# REFERRAL SYSTEM - INSTANT AUTO CREDIT
+REFERRAL_BONUS=1500              # REFERRER gets 1500 coins INSTANTLY
+REFERRAL_BONUS_REFERRER=1500     # Explicit referrer bonus
+REFERRAL_BONUS_REFEREE=500       # New user gets 500 coins
+STARTING_BONUS=500               # Signup bonus
+
+# DAILY REWARDS
+DAILY_REWARD=100
+WELCOME_BONUS=500               # Welcome bonus (already includes starting bonus)
+FIRST_TASK_BONUS=200
+STREAK_BONUS_MULTIPLIER=1.5
+MAX_DAILY_EARNINGS=50000
+
+# ============================================
+# 💸 WITHDRAWAL SYSTEM - 15TH ONLY, $15 MINIMUM
+# ============================================
+# WITHDRAWAL RULES - STRICT ENFORCEMENT
+WITHDRAWAL_MINIMUM_COINS=75000      # $15 USD minimum (75,000 coins)
+WITHDRAWAL_MINIMUM_USD=15          # $15 USD minimum
+WITHDRAWAL_MAXIMUM_COINS=2500000   # $500 USD maximum per month
+WITHDRAWAL_MAXIMUM_USD=500         # $500 USD maximum per month
+WITHDRAWAL_FEE_PERCENT=15          # 15% processing fee (MANDATORY)
+WITHDRAWAL_DAY=15                 # 15TH ONLY - STRICT
+WITHDRAWAL_CRYPTO_TYPE=USDT-BNB-TRX # Only USDT on BNB Chain or TRON
+WITHDRAWAL_PROCESSING_DAYS=1       # Processed on same day (15th)
+WITHDRAWAL_COOLDOWN=0             # No cooldown, monthly limit applies
+
+# ELIGIBILITY REQUIREMENTS - ALL MUST PASS
+WITHDRAWAL_REQUIRE_ACCOUNT_AGE=30   # Minimum 30 days
+WITHDRAWAL_REQUIRE_GAMES=100        # Minimum 100 games played
+WITHDRAWAL_REQUIRE_REFERRALS=5      # Minimum 5 active referrals
+WITHDRAWAL_REQUIRE_LOGIN_STREAK=7   # Minimum 7-day login streak
+WITHDRAWAL_REQUIRE_NO_PENDING=true  # No pending withdrawals
+
+# ============================================
+# 🎮 USER LIMITS & RESTRICTIONS
+# ============================================
+MAX_CLICKS_PER_DAY=1000
+MAX_TASKS_PER_DAY=50
+MAX_REFERRALS_PER_DAY=10
+MAX_REFERRALS_TOTAL=1000            # No hard limit, just UI display
+
+# ============================================
+# 📋 CUSTOM TASKS SETTINGS
+# ============================================
+DEFAULT_TASK_SLOTS=100
+DEFAULT_PER_USER_LIMIT=1
+DEFAULT_COOLDOWN_HOURS=24
+AUTO_APPROVE_TASKS=false
+TASK_EXPIRY_DAYS=30
+MAX_PROOF_FILES=5
+MAX_FILE_SIZE=10485760  # 10MB
+ALLOWED_FILE_TYPES=image/jpeg,image/png,image/gif,image/webp,application/pdf
+
+# ============================================
+# 🔌 CPA NETWORK SETTINGS
+# ============================================
+AUTO_APPROVE_CONVERSIONS=false
+CPA_CONVERSION_TIMEOUT=24  # hours
+CPA_MIN_PAYOUT=0.01
+CPA_MAX_PAYOUT=100
+DEFAULT_NETWORK_STATUS=active
+ENABLE_FRAUD_DETECTION=true
+
+# ============================================
+# 🛡️ FRAUD PREVENTION - WITHDRAWAL SECURITY
+# ============================================
+BLOCK_VPN=true
+BLOCK_PROXY=true
+BLOCK_SAME_IP=true
+MAX_ATTEMPTS_PER_TASK=3
+FRAUD_SCORE_THRESHOLD=70
+IP_QUALITY_SCORE_API_KEY=
+MAX_CONVERSIONS_PER_IP=5
+DEVICE_FINGERPRINTING=true
+
+# ANTI-FRAUD FOR WITHDRAWALS
+WITHDRAWAL_MAX_PER_IP=1            # Only 1 withdrawal per IP per month
+WITHDRAWAL_REQUIRE_VERIFIED_EMAIL=true  # Email verification required
+WITHDRAWAL_SUSPICIOUS_PATTERN_LIMIT=3   # Flag after 3 suspicious patterns
+WITHDRAWAL_MANUAL_REVIEW_THRESHOLD=1000  # Manual review for $1000+
+
+# ============================================
+# 📧 EMAIL CONFIGURATION (SMTP)
+# ============================================
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=noreply@coinmaster.pro
+SMTP_PASS=coinmaster_smtp_password_2024
+ADMIN_EMAIL=admin@coinmaster.pro
+NOREPLY_EMAIL=noreply@coinmaster.pro
+
+# ============================================
+# ☁️ CLOUD STORAGE (OPTIONAL)
+# ============================================
+CLOUDINARY_CLOUD_NAME=coinmaster
+CLOUDINARY_API_KEY=123456789012345
+CLOUDINARY_API_SECRET=cloudinary_secret_key_2024
+CLOUDINARY_FOLDER=coinmaster
+
+# AWS S3 (Backup)
+AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+AWS_REGION=us-east-1
+AWS_BUCKET_NAME=coinmaster-uploads
+
+# ============================================
+# 📊 ANALYTICS & MONITORING
+# ============================================
+ENABLE_ANALYTICS=true
+LOG_LEVEL=info
+LOG_FILE=logs/coinmaster.log
+SENTRY_DSN=https://sentry.io/coinmaster-pro
+GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
+
+# WITHDRAWAL MONITORING
+ENABLE_WITHDRAWAL_LOGS=true
+WITHDRAWAL_AUDIT_TRAIL=true
+WITHDRAWAL_NOTIFY_ADMIN_EMAIL=withdrawals@coinmaster.pro
+WITHDRAWAL_NOTIFY_ADMIN_TELEGRAM=true
+
+# ============================================
+# ⏰ CRON JOBS SCHEDULER - WITHDRAWAL AUTOMATION
+# ============================================
+ENABLE_TASK_CRON=true
+ENABLE_CPA_CRON=true
+ENABLE_WITHDRAWAL_CRON=true
+
+# WITHDRAWAL CRON - 15TH OF EVERY MONTH AT 00:00
+WITHDRAWAL_CRON_SCHEDULE="0 0 15 * *"
+WITHDRAWAL_REMINDER_CRON="0 9 14 * *"     # 14th at 9 AM
+WITHDRAWAL_ELIGIBILITY_CRON="0 0 * * *"   # Daily at midnight
+WITHDRAWAL_MONTHLY_RESET_CRON="0 0 1 * *" # 1st of every month
+
+TASK_CRON_SCHEDULE="*/5 * * * *"  # Every 5 minutes
+REPORT_CRON_SCHEDULE="0 9 * * *"   # Daily at 9 AM
+CLEANUP_CRON_SCHEDULE="0 0 * * 0"  # Weekly on Sunday
+
+# ============================================
+# 💳 PAYMENT GATEWAYS - CRYPTO WITHDRAWALS
+# ============================================
+# USDT-BNB TRX WITHDRAWAL CONFIGURATION
+CRYPTO_NETWORK=BNB_TRX           # Both BNB Chain and TRON supported
+CRYPTO_CURRENCY=USDT
+CRYPTO_WALLET_ADDRESS=TXYZ1234567890abcdefghijklmnopqrstuvwxyz
+CRYPTO_WITHDRAWAL_ENABLED=true
+CRYPTO_WITHDRAWAL_FEE=15        # 15% fee
+CRYPTO_WITHDRAWAL_MIN=15        # $15 USD minimum
+CRYPTO_WITHDRAWAL_MAX=500       # $500 USD maximum per month
+
+# BINANCE PAY API (for BSC withdrawals)
+BINANCE_API_KEY=binance_api_key_2024
+BINANCE_SECRET_KEY=binance_secret_key_2024
+BINANCE_WITHDRAWAL_ENABLED=false
+
+# TRONGRID API (for TRON withdrawals)
+TRONGRID_API_KEY=trongrid_api_key_2024
+TRON_PRO_API_KEY=tron_pro_api_key_2024
+TRON_WITHDRAWAL_ENABLED=false
+
+# PAYPAL (Fallback - Not primary)
+PAYPAL_CLIENT_ID=ARJfk2j4h5k6j7h8g9f0d1s2a3q4w5e6r7t8y9
+PAYPAL_CLIENT_SECRET=EKj8h9g0f1d2s3a4q5w6e7r8t9y0u1i2o3p4a5s6d7f8
+PAYPAL_MODE=sandbox  # sandbox or live
+
+# STRIPE (Fallback - Not primary)
+STRIPE_PUBLIC_KEY=pk_test_51H4j8k2j4h5k6j7h8g9f0d1s2a3q4w5e6r7t8y9
+STRIPE_SECRET_KEY=sk_test_51H4j8k2j4h5k6j7h8g9f0d1s2a3q4w5e6r7t8y9
+STRIPE_WEBHOOK_SECRET=whsec_2j4h5k6j7h8g9f0d1s2a3q4w5e6r7t8y9
+
+# ============================================
+# 🔗 API RATE LIMITING - WITHDRAWAL PROTECTION
+# ============================================
+RATE_LIMIT_WINDOW=15  # minutes
+RATE_LIMIT_MAX=100    # requests per window
+API_RATE_LIMIT=1000   # requests per minute
+
+# WITHDRAWAL API RATE LIMITS
+WITHDRAWAL_RATE_LIMIT_WINDOW=60  # minutes
+WITHDRAWAL_RATE_LIMIT_MAX=5      # max 5 withdrawal requests per hour
+WITHDRAWAL_IP_LIMIT=3            # max 3 withdrawals per IP per day
+
+# ============================================
+# 👤 ADMIN CREDENTIALS
+# ============================================
+ADMIN_USERNAME=coinmaster_admin
+ADMIN_EMAIL=admin@coinmaster.pro
+ADMIN_PASSWORD=CoinMaster@2024#Secure
+ADMIN_PHONE=+1234567890
+ADMIN_TELEGRAM_ID=123456789
+ADMIN_TELEGRAM_USERNAME=@coinmaster_admin
+
+# ============================================
+# 🌐 CORS & SECURITY
+# ============================================
+CORS_ORIGIN=http://localhost:3000,http://localhost:3001,https://coinmaster.pro
+CSRF_PROTECTION=true
+XSS_PROTECTION=true
+HSTS_ENABLED=false  # Enable in production with HTTPS
+CONTENT_SECURITY_POLICY="default-src 'self' https://telegram.org https://*.telegram.org"
+
+# ============================================
+# 🧪 TEST MODE - WITHDRAWAL TESTING
+# ============================================
+TEST_MODE=true
+SKIP_EMAIL_VERIFICATION=false    # Enable in production
+SKIP_FRAUD_CHECKS=false
+SKIP_WITHDRAWAL_DATE_CHECK=false  # NEVER set to true! 15th only is STRICT
+MOCK_CONVERSIONS=false
+MOCK_WITHDRAWALS=true            # Mock withdrawals for testing (disable in production)
+TEST_WITHDRAWAL_AMOUNT=75000     # Test withdrawal amount
+TEST_WALLET_ADDRESS=0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb1
+
+# ============================================
+# 📱 TELEGRAM BOT COMMANDS - WITHDRAWAL INTEGRATION
+# ============================================
+TELEGRAM_COMMAND_START=/start
+TELEGRAM_COMMAND_BALANCE=/balance
+TELEGRAM_COMMAND_REFERRAL=/referral
+TELEGRAM_COMMAND_WITHDRAW=/withdraw
+TELEGRAM_COMMAND_WITHDRAWAL_STATUS=/status
+TELEGRAM_COMMAND_WITHDRAWAL_HISTORY=/history
+TELEGRAM_COMMAND_WITHDRAWAL_DATE=/nextdate
+
+# ============================================
+# 🎯 REFERRAL SYSTEM CONFIGURATION - 1500 COINS
+# ============================================
+REFERRAL_LINK_BASE=https://t.me/CoinMasterProBot?start=
+REFERRAL_COOKIE_DURATION=30      # days
+REFERRAL_IP_TRACKING=true
+REFERRAL_DEVICE_TRACKING=true
+REFERRAL_MAX_PER_IP=3
+REFERRAL_MIN_TIME_BETWEEN=300    # 5 minutes minimum between referrals from same IP
+REFERRAL_REQUIRED_INTERACTIONS=1 # Minimum interactions before counting as active
+
+# ============================================
+# 📊 WITHDRAWAL STATISTICS & REPORTING
+# ============================================
+WITHDRAWAL_GENERATE_REPORTS=true
+WITHDRAWAL_REPORT_EMAIL=reports@coinmaster.pro
+WITHDRAWAL_REPORT_CRON="0 1 16 * *"  # 16th at 1 AM (day after withdrawals)
+WITHDRAWAL_REPORT_FORMAT=pdf,csv
+WITHDRAWAL_SAVE_RECEIPTS=true
+
+# ============================================
+# 🛡️ WITHDRAWAL SECURITY ENHANCEMENTS
+# ============================================
+WITHDRAWAL_2FA_REQUIRED=false     # Enable for high-value withdrawals
+WITHDRAWAL_EMAIL_CONFIRMATION=true
+WITHDRAWAL_PHONE_CONFIRMATION=false
+WITHDRAWAL_WHITELIST_ENABLED=false
+WITHDRAWAL_WHITELIST_ADDRESSES=
+WITHDRAWAL_DELAY_HOURS=0          # No delay, processed on 15th
+WITHDRAWAL_MAX_ATTEMPTS=3         # Max failed attempts before lock
+WITHDRAWAL_LOCKOUT_HOURS=24       # Lockout duration after max attempts
+
+# ============================================
+# 💎 BLOCKCHAIN EXPLORER LINKS
+# ============================================
+BSCSCAN_URL=https://bscscan.com/tx/
+TRONSCAN_URL=https://tronscan.org/#/transaction/
+ETHERSCAN_URL=https://etherscan.io/tx/
+
+# ============================================
+# 📝 SYSTEM READY - ALL FEATURES CONFIGURED
+# ✅ 1500 Coins Referral Bonus - INSTANT AUTO-CREDIT
+# ✅ $15 Minimum Withdrawal - 75,000 coins
+# ✅ 15th Only Withdrawal Day - STRICT
+# ✅ 15% Processing Fee - MANDATORY
+# ✅ USDT-BNB TRX Only - CRYPTO PAYMENT
+# ✅ 5 Referrals Required - ELIGIBILITY
+# ✅ 30 Days Account Age - REQUIREMENT
+# ✅ 100 Games Played - REQUIREMENT
+# ✅ 7-Day Login Streak - REQUIREMENT
+# ============================================

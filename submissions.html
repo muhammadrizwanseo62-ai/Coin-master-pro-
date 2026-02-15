@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submissions Management - CPA Marketing System</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    
+    <!-- Lightbox2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1a1c2c 0%, #2d3748 100%);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar h2 i {
+            color: #4ade80;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .sidebar-nav a i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1c2c;
+            margin: 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1c2c;
+        }
+        
+        .filter-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .submissions-table-container {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .badge-paid {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-approve {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .btn-reject {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn-view {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .proof-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .proof-modal.active {
+            display: flex;
+        }
+        
+        .proof-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .screenshot-item {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+        
+        .screenshot-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .bulk-actions {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-details-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1100;
+            display: none;
+        }
+        
+        .user-details-popup.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>
+            <i class="fas fa-chart-line"></i>
+            CPA Admin
+        </h2>
+        
+        <ul class="sidebar-nav">
+            <li>
+                <a href="/admin/dashboard.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="/admin/custom-tasks.html">
+                    <i class="fas fa-tasks"></i>
+                    Custom Tasks
+                </a>
+            </li>
+            <li>
+                <a href="/admin/submissions.html" class="active">
+                    <i class="fas fa-clipboard-check"></i>
+                    Submissions
+                </a>
+            </li>
+            <li>
+                <a href="/admin/network-integration.html">
+                    <i class="fas fa-plug"></i>
+                    Offer Wall Manager
+                </a>
+            </li>
+            <li>
+                <a href="/admin/offers.html" target="_blank">
+                    <i class="fas fa-ad"></i>
+                    View Offers
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="openBanUserModal()">
+                    <i class="fas fa-ban"></i>
+                    Ban User
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1>Submissions</h1>
+                <p class="text-muted">Review and manage user submissions</p>
+            </div>
+            <div>
+                <button class="btn btn-success me-2" onclick="exportData('csv')">
+                    <i class="fas fa-file-csv"></i>
+                    Export CSV
+                </button>
+                <button class="btn btn-danger" onclick="exportData('pdf')">
+                    <i class="fas fa-file-pdf"></i>
+                    Export PDF
+                </button>
+            </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <div class="value" id="pendingCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Approved Today</h3>
+                <div class="value" id="approvedToday">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Rejected Today</h3>
+                <div class="value" id="rejectedToday">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Avg. Response Time</h3>
+                <div class="value" id="avgResponseTime">0h</div>
+            </div>
+        </div>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="filterStatus" onchange="loadSubmissions()">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="paid">Paid</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Task</label>
+                    <select class="form-select" id="filterTask" onchange="loadSubmissions()">
+                        <option value="all">All Tasks</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Date Range</label>
+                    <select class="form-select" id="filterDate" onchange="loadSubmissions()">
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="7days">Last 7 Days</option>
+                        <option value="30days">Last 30 Days</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Search</label>
+                    <input type="text" class="form-control" id="searchInput" placeholder="User ID, Task ID..." onkeyup="loadSubmissions()">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bulk Actions -->
+        <div class="bulk-actions">
+            <div>
+                <input type="checkbox" id="selectAll" onclick="toggleSelectAll()">
+                <label for="selectAll" class="ms-2">Select All</label>
+            </div>
+            <div class="vr"></div>
+            <button class="btn btn-success btn-sm" onclick="bulkApprove()">
+                <i class="fas fa-check-circle"></i>
+                Approve Selected
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="bulkReject()">
+                <i class="fas fa-times-circle"></i>
+                Reject Selected
+            </button>
+            <button class="btn btn-info btn-sm" onclick="bulkExport()">
+                <i class="fas fa-download"></i>
+                Export Selected
+            </button>
+            <span id="selectedCount" class="ms-auto text-muted">0 selected</span>
+        </div>
+        
+        <!-- Submissions Table -->
+        <div class="submissions-table-container">
+            <table id="submissionsTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="40">
+                            <input type="checkbox" id="selectAllHeader" onclick="toggleSelectAll()">
+                        </th>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Task</th>
+                        <th>Reward</th>
+                        <th>Submitted</th>
+                        <th>Status</th>
+                        <th>Fraud Score</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="submissionsTableBody">
+                    <tr>
+                        <td colspan="9" class="text-center py-5">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-3 text-muted">Loading submissions...</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Pagination -->
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center" id="pagination">
+                    <!-- Dynamic pagination -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- Proof View Modal -->
+    <div id="proofModal" class="proof-modal">
+        <div class="proof-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>Submission Details</h4>
+                <button class="btn-close" onclick="closeProofModal()"></button>
+            </div>
+            
+            <div id="proofDetails">
+                <!-- Dynamic proof details -->
+            </div>
+            
+            <div class="mt-4 d-flex justify-content-end gap-2">
+                <button class="btn btn-success" id="approveBtn" onclick="approveCurrent()">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn btn-danger" id="rejectBtn" onclick="rejectCurrent()">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+                <button class="btn btn-warning" onclick="banCurrentUser()">
+                    <i class="fas fa-ban"></i> Ban User
+                </button>
+                <button class="btn btn-secondary" onclick="closeProofModal()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- User Details Popup -->
+    <div id="userDetailsPopup" class="user-details-popup">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5>User Details</h5>
+            <button class="btn-close" onclick="closeUserPopup()"></button>
+        </div>
+        <div id="userDetailsContent">
+            <!-- Dynamic user details -->
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-danger w-100" onclick="banUser()">
+                <i class="fas fa-ban"></i> Ban User
+            </button>
+        </div>
+    </div>
+    
+    <!-- Reject Reason Modal -->
+    <div id="rejectModal" class="proof-modal">
+        <div class="proof-content" style="max-width: 500px;">
+            <h4 class="mb-3">Reject Submission</h4>
+            <div class="mb-3">
+                <label class="form-label">Rejection Reason</label>
+                <textarea class="form-control" id="rejectionReason" rows="3" placeholder="Enter reason for rejection..."></textarea>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" onclick="closeRejectModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="confirmReject()">Reject</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ban User Modal -->
+    <div id="banModal" class="proof-modal">
+        <div class="proof-content" style="max-width: 500px;">
+            <h4 class="mb-3">Ban User</h4>
+            <div class="mb-3">
+                <label class="form-label">Username/User ID</label>
+                <input type="text" class="form-control" id="banUserId" placeholder="Enter user ID or username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Reason</label>
+                <textarea class="form-control" id="banReason" rows="3" placeholder="Enter ban reason..."></textarea>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" onclick="closeBanModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="confirmBan()">Ban User</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentPage = 1;
+        const limit = 20;
+        let totalPages = 1;
+        let selectedSubmissions = new Set();
+        let currentSubmissionId = null;
+        
+        // Load submissions on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSubmissions();
+            loadStats();
+            loadTasks();
+        });
+        
+        // Load submissions from API
+        async function loadSubmissions() {
+            try {
+                const status = document.getElementById('filterStatus').value;
+                const taskId = document.getElementById('filterTask').value;
+                const dateRange = document.getElementById('filterDate').value;
+                const search = document.getElementById('searchInput').value;
+                
+                let url = `/api/admin/custom-tasks/pending?page=${currentPage}&limit=${limit}`;
+                if (status !== 'pending') url += `&status=${status}`;
+                if (taskId !== 'all') url += `&taskId=${taskId}`;
+                if (search) url += `&search=${encodeURIComponent(search)}`;
+                
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderSubmissions(data.submissions || []);
+                    totalPages = data.pages || 1;
+                    renderPagination();
+                }
+            } catch (error) {
+                console.error('Load submissions error:', error);
+            }
+        }
+        
+        // Load stats
+        async function loadStats() {
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch('/api/admin/custom-tasks/analytics', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('pendingCount').textContent = data.overview?.totalPending || 0;
+                    
+                    // Calculate today's stats
+                    const today = new Date().toISOString().split('T')[0];
+                    const todayApproved = data.submissionsOverTime?.filter(s => 
+                        s._id?.year === new Date().getFullYear() &&
+                        s._id?.month === new Date().getMonth() + 1 &&
+                        s._id?.day === new Date().getDate()
+                    ).reduce((sum, s) => sum + (s.approved || 0), 0) || 0;
+                    
+                    document.getElementById('approvedToday').textContent = todayApproved;
+                    document.getElementById('rejectedToday').textContent = '0'; // Implement actual
+                    document.getElementById('avgResponseTime').textContent = '2.5h'; // Implement actual
+                }
+            } catch (error) {
+                console.error('Load stats error:', error);
+            }
+        }
+        
+        // Load tasks for filter
+        async function loadTasks() {
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch('/api/custom-tasks', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const select = document.getElementById('filterTask');
+                    data.tasks.forEach(task => {
+                        const option = document.createElement('option');
+                        option.value = task._id;
+                        option.textContent = task.title;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Load tasks error:', error);
+            }
+        }
+        
+        // Render submissions table
+        function renderSubmissions(submissions) {
+            const tbody = document.getElementById('submissionsTableBody');
+            
+            if (!submissions || submissions.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="text-center py-5">
+                            <i class="fas fa-check-circle fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No submissions found</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            submissions.forEach(sub => {
+                const statusClass = 
+                    sub.status === 'pending' ? 'badge-pending' :
+                    sub.status === 'approved' ? 'badge-approved' :
+                    sub.status === 'rejected' ? 'badge-rejected' : 'badge-paid';
+                
+                const fraudScore = sub.fraudScore || 0;
+                const fraudColor = fraudScore > 70 ? 'text-danger' : fraudScore > 30 ? 'text-warning' : 'text-success';
+                
+                html += `
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="submission-checkbox" value="${sub._id}" onchange="updateSelectedCount()">
+                        </td>
+                        <td>
+                            <small>${sub.submissionId || sub._id?.substring(0, 8) || 'SUB-001'}</small>
+                        </td>
+                        <td>
+                            <div onclick="showUserDetails('${sub.userId?._id || sub.userId}')" style="cursor: pointer;">
+                                <strong>${sub.userId?.username || 'Unknown'}</strong>
+                                <br><small class="text-muted">${sub.userId?.email || ''}</small>
+                            </div>
+                        </td>
+                        <td>
+                            <strong>${sub.taskId?.title || 'Unknown Task'}</strong>
+                            <br><small class="text-muted">${sub.taskId?.category || ''}</small>
+                        </td>
+                        <td>
+                            ${sub.taskId?.rewardCoins || 0} coins
+                            <br><small>$${(sub.taskId?.rewardUSD || 0).toFixed(2)}</small>
+                        </td>
+                        <td>
+                            ${new Date(sub.submittedAt).toLocaleDateString()}
+                            <br><small class="text-muted">${new Date(sub.submittedAt).toLocaleTimeString()}</small>
+                        </td>
+                        <td>
+                            <span class="badge ${statusClass}">${sub.status}</span>
+                        </td>
+                        <td>
+                            <span class="${fraudColor} fw-bold">${fraudScore}</span>
+                            ${sub.isSuspicious ? '<i class="fas fa-exclamation-triangle text-warning ms-1" title="Suspicious"></i>' : ''}
+                        </td>
+                        <td>
+                            <button class="action-btn btn-view" onclick="viewProof('${sub._id}')" title="View">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            ${sub.status === 'pending' ? `
+                                <button class="action-btn btn-approve" onclick="approveSubmission('${sub._id}')" title="Approve">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="action-btn btn-reject" onclick="openRejectModal('${sub._id}')" title="Reject">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            ` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        // Render pagination
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            let html = '';
+            
+            if (currentPage > 1) {
+                html += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a></li>`;
+            }
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    html += `<li class="page-item active"><span class="page-link">${i}</span></li>`;
+                } else if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    html += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
+            }
+            
+            if (currentPage < totalPages) {
+                html += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a></li>`;
+            }
+            
+            pagination.innerHTML = html;
+        }
+        
+        // Change page
+        function changePage(page) {
+            currentPage = page;
+            loadSubmissions();
+        }
+        
+        // View proof details
+        async function viewProof(submissionId) {
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch(`/api/admin/custom-tasks/submission/${submissionId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentSubmissionId = submissionId;
+                    renderProofDetails(data.submission);
+                    document.getElementById('proofModal').classList.add('active');
+                }
+            } catch (error) {
+                console.error('View proof error:', error);
+                alert('Failed to load proof details');
+            }
+        }
+        
+        // Render proof details
+        function renderProofDetails(submission) {
+            const container = document.getElementById('proofDetails');
+            
+            let proofHtml = '';
+            
+            // Proof data fields
+            if (submission.proofData && submission.proofData.length > 0) {
+                proofHtml += '<h6 class="mb-2">Submitted Proof:</h6>';
+                submission.proofData.forEach(field => {
+                    proofHtml += `
+                        <div class="mb-2">
+                            <strong>${field.fieldLabel}:</strong>
+                            ${field.fieldType === 'image' || field.fieldType === 'file' ?
+                                `<a href="${field.fileUrl}" target="_blank">View File</a>` :
+                                `<span>${field.fieldValue}</span>`
+                            }
+                        </div>
+                    `;
+                });
+            }
+            
+            // Screenshots
+            if (submission.screenshotUrls && submission.screenshotUrls.length > 0) {
+                proofHtml += '<h6 class="mt-3 mb-2">Screenshots:</h6>';
+                proofHtml += '<div class="screenshot-grid">';
+                submission.screenshotUrls.forEach(url => {
+                    proofHtml += `
+                        <div class="screenshot-item">
+                            <a href="${url}" data-lightbox="submission-screenshots">
+                                <img src="${url}" alt="Screenshot">
+                            </a>
+                        </div>
+                    `;
+                });
+                proofHtml += '</div>';
+            }
+            
+            // Submitted link
+            if (submission.submittedLink) {
+                proofHtml += `
+                    <div class="mt-3">
+                        <strong>Submitted Link:</strong>
+                        <br><a href="${submission.submittedLink}" target="_blank">${submission.submittedLink}</a>
+                    </div>
+                `;
+            }
+            
+            // Submitted username
+            if (submission.submittedUsername) {
+                proofHtml += `
+                    <div class="mt-2">
+                        <strong>Username:</strong> ${submission.submittedUsername}
+                    </div>
+                `;
+            }
+            
+            // Metadata
+            proofHtml += `
+                <hr>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <strong>IP Address:</strong> ${submission.ip || 'N/A'}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Country:</strong> ${submission.country || 'N/A'}
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <strong>Device:</strong> ${submission.device || 'N/A'}
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <strong>Browser:</strong> ${submission.browser || 'N/A'}
+                    </div>
+                </div>
+            `;
+            
+            // Fraud info
+            if (submission.fraudScore > 0) {
+                proofHtml += `
+                    <div class="alert ${submission.fraudScore > 70 ? 'alert-danger' : submission.fraudScore > 30 ? 'alert-warning' : 'alert-info'} mt-3">
+                        <strong>Fraud Score: ${submission.fraudScore}</strong>
+                        ${submission.fraudReasons ? `<br><small>${submission.fraudReasons.join(', ')}</small>` : ''}
+                    </div>
+                `;
+            }
+            
+            // Admin notes
+            if (submission.adminNotes) {
+                proofHtml += `
+                    <div class="mt-3 p-3 bg-light rounded">
+                        <strong>Admin Notes:</strong>
+                        <p class="mb-0 mt-1">${submission.adminNotes}</p>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = proofHtml;
+        }
+        
+        // Approve submission
+        async function approveSubmission(id) {
+            if (!confirm('Approve this submission?')) return;
+            
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch(`/api/admin/custom-tasks/submission/${id}/approve`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Submission approved successfully!');
+                    loadSubmissions();
+                    loadStats();
+                    closeProofModal();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Approve error:', error);
+                alert('Failed to approve submission');
+            }
+        }
+        
+        // Approve current submission
+        function approveCurrent() {
+            if (currentSubmissionId) {
+                approveSubmission(currentSubmissionId);
+            }
+        }
+        
+        // Open reject modal
+        function openRejectModal(submissionId) {
+            currentSubmissionId = submissionId;
+            document.getElementById('rejectModal').classList.add('active');
+        }
+        
+        // Close reject modal
+        function closeRejectModal() {
+            document.getElementById('rejectModal').classList.remove('active');
+            document.getElementById('rejectionReason').value = '';
+        }
+        
+        // Confirm reject
+        async function confirmReject() {
+            const reason = document.getElementById('rejectionReason').value;
+            
+            if (!reason) {
+                alert('Please enter a rejection reason');
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch(`/api/admin/custom-tasks/submission/${currentSubmissionId}/reject`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ rejectionReason: reason })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Submission rejected successfully!');
+                    loadSubmissions();
+                    loadStats();
+                    closeRejectModal();
+                    closeProofModal();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Reject error:', error);
+                alert('Failed to reject submission');
+            }
+        }
+        
+        // Reject current
+        function rejectCurrent() {
+            openRejectModal(currentSubmissionId);
+            closeProofModal();
+        }
+        
+        // Bulk approve
+        async function bulkApprove() {
+            const ids = Array.from(selectedSubmissions);
+            
+            if (ids.length === 0) {
+                alert('Please select submissions to approve');
+                return;
+            }
+            
+            if (!confirm(`Approve ${ids.length} submissions?`)) return;
+            
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch('/api/admin/custom-tasks/submissions/bulk-approve', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ submissionIds: ids })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`${data.approved} submissions approved successfully!`);
+                    selectedSubmissions.clear();
+                    updateSelectedCount();
+                    loadSubmissions();
+                    loadStats();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Bulk approve error:', error);
+                alert('Failed to bulk approve');
+            }
+        }
+        
+        // Bulk reject
+        async function bulkReject() {
+            const ids = Array.from(selectedSubmissions);
+            
+            if (ids.length === 0) {
+                alert('Please select submissions to reject');
+                return;
+            }
+            
+            const reason = prompt('Enter rejection reason for all selected submissions:');
+            if (!reason) return;
+            
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                let success = 0;
+                let failed = 0;
+                
+                for (const id of ids) {
+                    try {
+                        const response = await fetch(`/api/admin/custom-tasks/submission/${id}/reject`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify({ rejectionReason: reason })
+                        });
+                        
+                        const data = await response.json();
+                        if (data.success) success++;
+                        else failed++;
+                    } catch {
+                        failed++;
+                    }
+                }
+                
+                alert(`${success} submissions rejected, ${failed} failed`);
+                selectedSubmissions.clear();
+                updateSelectedCount();
+                loadSubmissions();
+                loadStats();
+            } catch (error) {
+                console.error('Bulk reject error:', error);
+                alert('Failed to bulk reject');
+            }
+        }
+        
+        // Toggle select all
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('.submission-checkbox');
+            const selectAll = document.getElementById('selectAll');
+            
+            checkboxes.forEach(cb => {
+                cb.checked = selectAll.checked;
+                if (selectAll.checked) {
+                    selectedSubmissions.add(cb.value);
+                } else {
+                    selectedSubmissions.delete(cb.value);
+                }
+            });
+            
+            updateSelectedCount();
+        }
+        
+        // Update selected count
+        function updateSelectedCount() {
+            const checkboxes = document.querySelectorAll('.submission-checkbox:checked');
+            selectedSubmissions.clear();
+            
+            checkboxes.forEach(cb => {
+                selectedSubmissions.add(cb.value);
+            });
+            
+            document.getElementById('selectedCount').textContent = `${selectedSubmissions.size} selected`;
+            document.getElementById('selectAll').checked = 
+                checkboxes.length === document.querySelectorAll('.submission-checkbox').length;
+            document.getElementById('selectAllHeader').checked = 
+                checkboxes.length === document.querySelectorAll('.submission-checkbox').length;
+        }
+        
+        // Export data
+        function exportData(format) {
+            const status = document.getElementById('filterStatus').value;
+            let url = `/api/admin/custom-tasks/export?format=${format}`;
+            if (status !== 'all') url += `&status=${status}`;
+            
+            window.open(url, '_blank');
+        }
+        
+        // Bulk export
+        function bulkExport() {
+            const ids = Array.from(selectedSubmissions);
+            if (ids.length === 0) {
+                alert('Please select submissions to export');
+                return;
+            }
+            
+            const url = `/api/admin/custom-tasks/export?ids=${ids.join(',')}`;
+            window.open(url, '_blank');
+        }
+        
+        // Show user details
+        async function showUserDetails(userId) {
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch(`/api/admin/users/${userId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const user = data.user;
+                    document.getElementById('userDetailsContent').innerHTML = `
+                        <p><strong>Username:</strong> ${user.username}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Telegram ID:</strong> ${user.telegramId || 'N/A'}</p>
+                        <p><strong>Coins:</strong> ${user.coins || 0}</p>
+                        <p><strong>Joined:</strong> ${new Date(user.createdAt).toLocaleDateString()}</p>
+                        <p><strong>Total Earned:</strong> ${user.totalEarned || 0} coins</p>
+                        <p><strong>Tasks Completed:</strong> ${user.tasksCompleted || 0}</p>
+                        <p><strong>Fraud Warnings:</strong> ${user.fraudWarnings || 0}</p>
+                        ${user.isBlacklisted ? '<span class="badge bg-danger">Blacklisted</span>' : ''}
+                    `;
+                    document.getElementById('userDetailsPopup').classList.add('active');
+                }
+            } catch (error) {
+                console.error('Show user details error:', error);
+                alert('Failed to load user details');
+            }
+        }
+        
+        // Close user popup
+        function closeUserPopup() {
+            document.getElementById('userDetailsPopup').classList.remove('active');
+        }
+        
+        // Open ban user modal
+        function openBanUserModal() {
+            document.getElementById('banModal').classList.add('active');
+        }
+        
+        // Close ban modal
+        function closeBanModal() {
+            document.getElementById('banModal').classList.remove('active');
+            document.getElementById('banUserId').value = '';
+            document.getElementById('banReason').value = '';
+        }
+        
+        // Ban current user
+        function banCurrentUser() {
+            // Get user ID from current submission
+            closeProofModal();
+            openBanUserModal();
+        }
+        
+        // Confirm ban
+        async function confirmBan() {
+            const userId = document.getElementById('banUserId').value || currentSubmissionId;
+            const reason = document.getElementById('banReason').value;
+            
+            if (!userId) {
+                alert('Please enter user ID');
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                const response = await fetch('/api/admin/users/ban', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ userId, reason })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('User banned successfully!');
+                    closeBanModal();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Ban user error:', error);
+                alert('Failed to ban user');
+            }
+        }
+        
+        // Close proof modal
+        function closeProofModal() {
+            document.getElementById('proofModal').classList.remove('active');
+            currentSubmissionId = null;
+        }
+        
+        // Auto refresh every 30 seconds
+        setInterval(() => {
+            if (!document.getElementById('proofModal').classList.contains('active')) {
+                loadSubmissions();
+                loadStats();
+            }
+        }, 30000);
+    </script>
+    
+    <!-- Lightbox2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+</body>
+</html>

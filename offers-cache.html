@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 CoinMaster Pro - Offers (Cached)</title>
+    
+    <!-- Minimal CSS for fast loading -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f3f4f6;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .cache-badge {
+            background: #fbbf24;
+            color: #1e293b;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .network {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .network h3 { margin-bottom: 15px; color: #1e293b; }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        .footer {
+            text-align: center;
+            color: #6b7280;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            iframe { height: 500px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cache-badge">
+            <i class="fas fa-bolt"></i> CACHED VERSION - Loaded from cache
+        </div>
+
+        <div id="cachedContent">
+            <!-- Cached content will be loaded here -->
+            <div class="text-center py-5">
+                <p>Loading cached offers...</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 CoinMaster Pro. Cached version - Last updated: <span id="cacheTime"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Load cached data from localStorage
+        function loadCachedContent() {
+            try {
+                const cached = localStorage.getItem('offerwall_cache');
+                if (cached) {
+                    const data = JSON.parse(cached);
+                    document.getElementById('cachedContent').innerHTML = data.html;
+                    document.getElementById('cacheTime').textContent = data.timestamp;
+                } else {
+                    document.getElementById('cachedContent').innerHTML = `
+                        <div class="network">
+                            <h3>No cached data available</h3>
+                            <p>Please visit the main offers page first.</p>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error('Failed to load cache:', e);
+            }
+        }
+
+        loadCachedContent();
+    </script>
+</body>
+</html>

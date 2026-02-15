@@ -1,0 +1,385 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const dotenv = require('dotenv');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const cron = require('node-cron');
+const fs = require('fs');
+
+// Load environment variables - YOUR EXACT CONFIG
+dotenv.config();
+
+// Import routes
+const adminRoutes = require('./routes/admin');
+const adManagerRoutes = require('./routes/ad-manager');
+const withdrawalRoutes = require('./routes/withdrawal');
+const referralRoutes = require('./routes/referral');
+const userRoutes = require('./routes/user');
+const taskRoutes = require('./routes/task');
+
+// Import middleware
+const { protect, apiLimiter } = require('./middleware/auth-middleware');
+const withdrawalCron = require('./cron/withdrawal-cron');
+
+// Initialize express
+const app = express();
+
+// Create logs directory if it doesn't exist
+const logDir = path.dirname(process.env.LOG_FILE || 'logs/coinmaster.log');
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+}
+
+// Security middleware
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://telegram.org"],
+            imgSrc: ["'self'", "data:", "https:", "https://*.telegram.org"],
+            connectSrc: ["'self'", "https://*.telegram.org"],
+            fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
+            objectSrc: ["'none'"],
+            mediaSrc: ["'self'"],
+            frameSrc: ["'self'", "https://telegram.org"]
+        }
+    }
+}));
+
+// CORS configuration - USING YOUR CORS_ORIGIN
+const corsOrigins = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['http://localhost:3000'];
+app.use(cors({
+    origin: corsOrigins,
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
+
+// Cookie parser
+app.use(cookieParser());
+
+// Compression middleware
+app.use(compression());
+
+// Body parsing middleware
+app.use(express.json({ limit: process.env.MAX_FILE_SIZE || '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: process.env.MAX_FILE_SIZE || '10mb' }));
+
+// Logging middleware - USING YOUR LOG_LEVEL
+if (process.env.LOG_LEVEL === 'debug') {
+    app.use(morgan('dev'));
+} else {
+    app.use(morgan('combined'));
+}
+
+// Static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Rate limiting - USING YOUR RATE_LIMIT settings
+const limiter = rateLimit({
+    windowMs: (process.env.RATE_LIMIT_WINDOW || 15) * 60 * 1000,
+    max: process.env.RATE_LIMIT_MAX || 100,
+    message: {
+        success: false,
+        message: 'Too many requests, please try again later.'
+    }
+});
+app.use('/api/', limiter);
+
+// Database connection
+const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        
+        console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+        console.log(`✅ Database: ${conn.connection.name}`);
+        
+        // Create default admin if none exists - USING YOUR ADMIN CREDENTIALS
+        const Admin = require('./models/Admin');
+        const adminCount = await Admin.countDocuments();
+        
+        if (adminCount === 0) {
+            const bcrypt = require('bcryptjs');
+            const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_ROUNDS) || 10);
+            const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, salt);
+            
+            await Admin.create({
+                username: process.env.ADMIN_USERNAME || 'admin',
+                email: process.env.ADMIN_EMAIL || 'admin@example.com',
+                password: hashedPassword,
+                fullName: 'Super Admin',
+                role: 'super_admin',
+                phone: process.env.ADMIN_PHONE,
+                telegramId: process.env.ADMIN_TELEGRAM_ID,
+                telegramUsername: process.env.ADMIN_TELEGRAM_USERNAME,
+                permissions: [
+                    'manage_ads',
+                    'manage_inline_ads',
+                    'manage_users',
+                    'manage_tasks',
+                    'manage_withdrawals',
+                    'view_analytics',
+                    'manage_admins',
+                    'export_data',
+                    'import_data',
+                    'update_settings'
+                ],
+                status: 'active'
+            });
+            
+            console.log('✅ Default admin created:');
+            console.log(`   Username: ${process.env.ADMIN_USERNAME}`);
+            console.log(`   Password: [HIDDEN - see .env file]`);
+            console.log(`   ⚠️ Please change this password in production!`);
+        }
+        
+    } catch (error) {
+        console.error('❌ Database connection error:', error);
+        process.exit(1);
+    }
+};
+
+// Routes
+app.use('/api/admin', adminRoutes);
+app.use('/api/ad-manager', adManagerRoutes);
+app.use('/api/withdrawal', withdrawalRoutes);
+app.use('/api/referral', referralRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/task', taskRoutes);
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        environment: process.env.NODE_ENV,
+        port: process.env.PORT,
+        features: {
+            referralBonus: `${process.env.REFERRAL_BONUS} coins`,
+            withdrawal: {
+                minimum: `$${process.env.WITHDRAWAL_MINIMUM_USD} (${process.env.WITHDRAWAL_MINIMUM_COINS} coins)`,
+                day: process.env.WITHDRAWAL_DAY,
+                fee: `${process.env.WITHDRAWAL_FEE_PERCENT}%`,
+                crypto: process.env.WITHDRAWAL_CRYPTO_TYPE
+            }
+        }
+    });
+});
+
+// API information endpoint
+app.get('/api', (req, res) => {
+    res.json({
+        name: 'CoinMaster Pro Admin API',
+        version: '2.0.0',
+        description: 'Complete admin panel with 1500 coins referral bonus + withdrawal system',
+        features: {
+            referralBonus: `${process.env.REFERRAL_BONUS} coins instant credit`,
+            withdrawal: {
+                minimum: `$${process.env.WITHDRAWAL_MINIMUM_USD} (${process.env.WITHDRAWAL_MINIMUM_COINS} coins)`,
+                day: `Only on ${process.env.WITHDRAWAL_DAY}th of each month`,
+                fee: `${process.env.WITHDRAWAL_FEE_PERCENT}% processing fee`,
+                crypto: process.env.WITHDRAWAL_CRYPTO_TYPE,
+                requirements: {
+                    accountAge: `${process.env.WITHDRAWAL_REQUIRE_ACCOUNT_AGE} days`,
+                    games: `${process.env.WITHDRAWAL_REQUIRE_GAMES} games`,
+                    referrals: `${process.env.WITHDRAWAL_REQUIRE_REFERRALS} active referrals`,
+                    loginStreak: `${process.env.WITHDRAWAL_REQUIRE_LOGIN_STREAK} days`
+                }
+            }
+        },
+        endpoints: {
+            admin: '/api/admin',
+            adManager: '/api/ad-manager',
+            withdrawal: '/api/withdrawal',
+            referral: '/api/referral',
+            user: '/api/user',
+            task: '/api/task'
+        },
+        documentation: '/api/docs',
+        status: '/health'
+    });
+});
+
+// Initialize cron jobs - USING YOUR CRON SCHEDULES
+if (process.env.ENABLE_WITHDRAWAL_CRON === 'true') {
+    // Withdrawal processing on 15th at 00:00
+    cron.schedule(process.env.WITHDRAWAL_CRON_SCHEDULE, async () => {
+        console.log('⏰ Running withdrawal cron job...');
+        await withdrawalCron.processWithdrawals();
+    });
+    
+    // Withdrawal reminder on 14th at 9 AM
+    cron.schedule(process.env.WITHDRAWAL_REMINDER_CRON, async () => {
+        console.log('⏰ Running withdrawal reminder cron...');
+        await withdrawalCron.sendReminders();
+    });
+    
+    // Daily eligibility check
+    cron.schedule(process.env.WITHDRAWAL_ELIGIBILITY_CRON, async () => {
+        console.log('⏰ Running eligibility check...');
+        await withdrawalCron.checkEligibility();
+    });
+    
+    // Monthly reset on 1st at 00:00
+    cron.schedule(process.env.WITHDRAWAL_MONTHLY_RESET_CRON, async () => {
+        console.log('⏰ Running monthly reset...');
+        await withdrawalCron.resetMonthlyLimits();
+    });
+    
+    console.log('✅ Withdrawal cron jobs scheduled');
+}
+
+if (process.env.ENABLE_TASK_CRON === 'true') {
+    cron.schedule(process.env.TASK_CRON_SCHEDULE, () => {
+        console.log('⏰ Running task cron job...');
+        // Task cleanup logic
+    });
+    console.log('✅ Task cron jobs scheduled');
+}
+
+if (process.env.ENABLE_CPA_CRON === 'true') {
+    cron.schedule(process.env.CPA_CRON_SCHEDULE || '*/10 * * * *', () => {
+        console.log('⏰ Running CPA cron job...');
+        // CPA conversion check logic
+    });
+    console.log('✅ CPA cron jobs scheduled');
+}
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('❌ Error:', err.stack);
+    
+    // Log to file if enabled
+    if (process.env.ENABLE_ANALYTICS === 'true') {
+        const logEntry = `[${new Date().toISOString()}] ERROR: ${err.message}\nStack: ${err.stack}\n`;
+        fs.appendFile(process.env.LOG_FILE || 'logs/error.log', logEntry, (error) => {
+            if (error) console.error('Error writing to log file:', error);
+        });
+    }
+    
+    // Mongoose validation error
+    if (err.name === 'ValidationError') {
+        return res.status(400).json({
+            success: false,
+            message: 'Validation Error',
+            errors: Object.values(err.errors).map(e => e.message)
+        });
+    }
+    
+    // Mongoose cast error (invalid ID)
+    if (err.name === 'CastError') {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid data format'
+        });
+    }
+    
+    // MongoDB duplicate key error
+    if (err.code === 11000) {
+        return res.status(409).json({
+            success: false,
+            message: 'Duplicate entry found',
+            field: Object.keys(err.keyPattern)[0]
+        });
+    }
+    
+    // JWT errors
+    if (err.name === 'JsonWebTokenError') {
+        return res.status(401).json({
+            success: false,
+            message: 'Invalid token'
+        });
+    }
+    
+    if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({
+            success: false,
+            message: 'Token expired. Please login again.'
+        });
+    }
+    
+    // Default error
+    res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+});
+
+// 404 handler for undefined routes
+app.use('*', (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'API endpoint not found',
+        availableEndpoints: [
+            '/api',
+            '/api/admin',
+            '/api/ad-manager',
+            '/api/withdrawal',
+            '/api/referral',
+            '/api/user',
+            '/api/task',
+            '/health'
+        ]
+    });
+});
+
+// Start server
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    
+    connectDB().then(() => {
+        const server = app.listen(PORT, () => {
+            console.log('\n=================================');
+            console.log(`🚀 CoinMaster Pro Server v2.0.0`);
+            console.log(`=================================`);
+            console.log(`📡 Environment: ${process.env.NODE_ENV}`);
+            console.log(`🔗 Port: ${PORT}`);
+            console.log(`📊 Frontend URL: ${process.env.FRONTEND_URL}`);
+            console.log(`🤖 Telegram Bot: @${process.env.BOT_USERNAME}`);
+            console.log(`=================================`);
+            console.log(`💰 Referral Bonus: ${process.env.REFERRAL_BONUS} coins INSTANT`);
+            console.log(`💸 Withdrawal: $${process.env.WITHDRAWAL_MINIMUM_USD} min (${process.env.WITHDRAWAL_MINIMUM_COINS} coins)`);
+            console.log(`📅 Withdrawal Day: ${process.env.WITHDRAWAL_DAY}th only`);
+            console.log(`💎 Crypto: ${process.env.WITHDRAWAL_CRYPTO_TYPE}`);
+            console.log(`=================================`);
+            console.log(`🔑 API: http://localhost:${PORT}/api`);
+            console.log(`💓 Health: http://localhost:${PORT}/health`);
+            console.log(`=================================\n`);
+        });
+
+        // Graceful shutdown
+        process.on('SIGTERM', () => {
+            console.log('📥 SIGTERM received: closing server...');
+            server.close(() => {
+                console.log('✅ HTTP server closed');
+                mongoose.connection.close(false, () => {
+                    console.log('✅ MongoDB connection closed');
+                    process.exit(0);
+                });
+            });
+        });
+
+        process.on('SIGINT', () => {
+            console.log('📥 SIGINT received: closing server...');
+            server.close(() => {
+                console.log('✅ HTTP server closed');
+                mongoose.connection.close(false, () => {
+                    console.log('✅ MongoDB connection closed');
+                    process.exit(0);
+                });
+            });
+        });
+    });
+}
+
+module.exports = app;

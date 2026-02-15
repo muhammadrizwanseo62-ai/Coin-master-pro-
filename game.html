@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>CoinMaster Pro - Tap to Earn</title>
+    <link rel="stylesheet" href="css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="balance-box">
+                <img src="images/icons/coin.png" alt="Coin" class="coin-icon">
+                <span id="balance">0.00</span>
+            </div>
+            <div class="timer-box">
+                <span id="timer">01:00</span>
+            </div>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-item">
+                <span class="stat-label">Taps</span>
+                <span class="stat-value" id="tapCount">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Coins</span>
+                <span class="stat-value" id="coinEarned">0.00</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Max</span>
+                <span class="stat-value">20</span>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            <span class="progress-text" id="progressText">0/100 taps</span>
+        </div>
+
+        <div class="tap-area" id="tapArea">
+            <img src="images/icons/tap.png" alt="Tap" class="tap-icon">
+            <h2>Tap to Earn</h2>
+            <p>0.2 coins per tap</p>
+        </div>
+
+        <div class="game-footer">
+            <button class="btn btn-primary" id="startGameBtn">Start Game</button>
+            <button class="btn btn-secondary" id="dashboardBtn">Dashboard</button>
+        </div>
+
+        <div class="result-modal" id="resultModal">
+            <div class="modal-content">
+                <h2>Game Complete!</h2>
+                <div class="result-stats">
+                    <div class="result-item">
+                        <span>Taps:</span>
+                        <span id="resultTaps">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Coins Earned:</span>
+                        <span id="resultCoins">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Time:</span>
+                        <span id="resultTime">0s</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Date:</span>
+                        <span id="resultDate"></span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="location.reload()">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Wall Manager - CPA Marketing System</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1a1c2c 0%, #2d3748 100%);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar h2 i {
+            color: #4ade80;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .sidebar-nav a i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1c2c;
+            margin: 0;
+        }
+        
+        .btn-add {
+            background: #4ade80;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-add:hover {
+            background: #22c55e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);
+            color: white;
+        }
+        
+        .network-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        .network-card.active {
+            border-left-color: #4ade80;
+        }
+        
+        .network-card.inactive {
+            border-left-color: #ef4444;
+            opacity: 0.7;
+        }
+        
+        .network-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .network-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .network-title i {
+            font-size: 24px;
+            color: #4ade80;
+        }
+        
+        .network-title h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .network-title small {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+        
+        .network-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-icon:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-edit {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-edit:hover {
+            background: #cbd5e0;
+        }
+        
+        .btn-toggle {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-toggle.active {
+            background: #4ade80;
+            color: white;
+        }
+        
+        .btn-toggle.inactive {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-delete {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+        
+        .btn-delete:hover {
+            background: #fecaca;
+        }
+        
+        .network-preview {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .preview-title {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .preview-code {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow: auto;
+        }
+        
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4ade80;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            font-family: monospace;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #4ade80;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #22c55e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 16px;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            color: #4ade80;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+        
+        .empty-state p {
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1100;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .toast.success {
+            border-left: 4px solid #4ade80;
+        }
+        
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+        
+        .toast i {
+            font-size: 20px;
+        }
+        
+        .toast.success i {
+            color: #4ade80;
+        }
+        
+        .toast.error i {
+            color: #ef4444;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>
+            <i class="fas fa-chart-line"></i>
+            CPA Admin
+        </h2>
+        
+        <ul class="sidebar-nav">
+            <li>
+                <a href="/admin/dashboard.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="/admin/custom-tasks.html">
+                    <i class="fas fa-tasks"></i>
+                    Custom Tasks
+                </a>
+            </li>
+            <li>
+                <a href="/admin/submissions.html">
+                    <i class="fas fa-clipboard-check"></i>
+                    Submissions
+                </a>
+            </li>
+            <li>
+                <a href="/admin/network-integration.html" class="active">
+                    <i class="fas fa-plug"></i>
+                    Offer Wall Manager
+                </a>
+            </li>
+            <li>
+                <a href="/admin/offers.html" target="_blank">
+                    <i class="fas fa-ad"></i>
+                    View Offers
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-users"></i>
+                    Users
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1>Offer Wall Manager</h1>
+                <p class="text-muted">Add and manage CPA network integrations</p>
+            </div>
+            <button class="btn-add" onclick="openAddNetworkModal()">
+                <i class="fas fa-plus"></i>
+                Add New Network
+            </button>
+        </div>
+        
+        <!-- Networks List -->
+        <div id="networksList">
+            <div class="text-center py-5">
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 text-muted">Loading networks...</p>
+            </div>
+        </div>
+        
+        <!-- Empty State (hidden by default) -->
+        <div id="emptyState" style="display: none;">
+            <div class="empty-state">
+                <i class="fas fa-plug"></i>
+                <h3>No Networks Added</h3>
+                <p>Get started by adding your first CPA network integration</p>
+                <button class="btn btn-primary" onclick="openAddNetworkModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Network
+                </button>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="mt-4" style="display: flex; gap: 15px; justify-content: flex-end;">
+            <button class="btn btn-secondary" onclick="regenerateOffersPage()">
+                <i class="fas fa-sync-alt"></i>
+                Regenerate Offers Page
+            </button>
+            <button class="btn btn-secondary" onclick="clearCache()">
+                <i class="fas fa-trash"></i>
+                Clear Cache
+            </button>
+            <a href="/admin/offers.html" target="_blank" class="btn btn-primary">
+                <i class="fas fa-external-link-alt"></i>
+                View Live Offers Page
+            </a>
+        </div>
+    </div>
+    
+    <!-- Add/Edit Network Modal -->
+    <div id="networkModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Network</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="networkForm" onsubmit="saveNetwork(event)">
+                <input type="hidden" id="networkId" name="networkId">
+                
+                <div class="form-group">
+                    <label>Network Name *</label>
+                    <select id="networkName" name="name" required onchange="toggleCustomName()">
+                        <option value="">Select Network</option>
+                        <option value="CPAGrip">CPAGrip</option>
+                        <option value="CPALead">CPALead</option>
+                        <option value="Adworkmedia">Adworkmedia</option>
+                        <option value="OGAds">OGAds</option>
+                        <option value="Offertoro">Offertoro</option>
+                        <option value="AdGate Media">AdGate Media</option>
+                        <option value="KiwiWall">KiwiWall</option>
+                        <option value="Ayet Studios">Ayet Studios</option>
+                        <option value="Toro">Toro</option>
+                        <option value="Persona.ly">Persona.ly</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div id="customNameGroup" class="form-group" style="display: none;">
+                    <label>Custom Network Name *</label>
+                    <input type="text" id="customName" name="customName" placeholder="Enter network name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Iframe Code *</label>
+                    <textarea id="iframeCode" name="iframeCode" required placeholder="Paste iframe code here..."></textarea>
+                    <small class="text-muted">Paste the full iframe code from the CPA network</small>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="status" name="status">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Display Order</label>
+                        <input type="number" id="displayOrder" name="displayOrder" value="0" min="0" max="999">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Country Targeting</label>
+                        <select id="countryTargeting" name="countryTargeting">
+                            <option value="all">All Countries</option>
+                            <option value="specific">Specific Countries</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Width</label>
+                        <input type="text" id="width" name="width" value="100%">
+                    </div>
+                </div>
+                
+                <div class="form-group" id="targetCountriesGroup" style="display: none;">
+                    <label>Target Countries</label>
+                    <select id="targetCountries" name="targetCountries" multiple size="5">
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="JP">Japan</option>
+                        <option value="WW">Worldwide</option>
+                    </select>
+                    <small class="text-muted">Hold Ctrl/Cmd to select multiple</small>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Height</label>
+                        <input type="text" id="height" name="height" value="600px">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Scrolling</label>
+                        <select id="scrolling" name="scrolling">
+                            <option value="auto">Auto</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description (Optional)</label>
+                    <textarea id="description" name="description" rows="2" placeholder="Brief description of this offer wall..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Icon</label>
+                        <select id="icon" name="icon">
+                            <option value="fa-ad">Default</option>
+                            <option value="fa-dollar-sign">Dollar</option>
+                            <option value="fa-coins">Coins</option>
+                            <option value="fa-trophy">Trophy</option>
+                            <option value="fa-gem">Gem</option>
+                            <option value="fa-bolt">Bolt</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Loading</label>
+                        <select id="loading" name="loading">
+                            <option value="lazy">Lazy</option>
+                            <option value="eager">Eager</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Network</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas"></i>
+        <span id="toastMessage"></span>
+    </div>
+    
+    <script>
+        // API Token (get from localStorage)
+        const token = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDFjNWI5MzIwYzI5M2MwMDAwMDAwMCIsImlhdCI6MTYyMDAwMDAwMCwiZXhwIjoxNjUxNTM2MDAwfQ';
+        
+        // Load networks on page load
+        document.addEventListener('DOMContentLoaded', loadNetworks);
+        
+        // Load networks from API
+        async function loadNetworks() {
+            try {
+                const response = await fetch('/api/admin/networks', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    if (data.networks && data.networks.length > 0) {
+                        renderNetworks(data.networks);
+                    } else {
+                        showEmptyState();
+                    }
+                } else {
+                    showToast('Failed to load networks: ' + data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Load networks error:', error);
+                showToast('Failed to load networks', 'error');
+            }
+        }
+        
+        // Render networks list
+        function renderNetworks(networks) {
+            const container = document.getElementById('networksList');
+            document.getElementById('emptyState').style.display = 'none';
+            
+            let html = '';
+            
+            networks.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+            
+            networks.forEach(network => {
+                const statusClass = network.status === 'active' ? 'badge-active' : 'badge-inactive';
+                const cardClass = network.status === 'active' ? 'network-card active' : 'network-card inactive';
+                const toggleClass = network.status === 'active' ? 'btn-toggle active' : 'btn-toggle inactive';
+                const toggleIcon = network.status === 'active' ? 'fa-pause' : 'fa-play';
+                
+                // Truncate iframe code for preview
+                let iframePreview = network.iframeCode;
+                if (iframePreview.length > 200) {
+                    iframePreview = iframePreview.substring(0, 200) + '...';
+                }
+                
+                html += `
+                    <div class="${cardClass}" data-network-id="${network._id}">
+                        <div class="network-header">
+                            <div class="network-title">
+                                <i class="fas ${network.icon || 'fa-ad'}"></i>
+                                <div>
+                                    <h3>${network.displayName || network.name}</h3>
+                                    <small>Order: ${network.displayOrder || 0}</small>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="badge ${statusClass}">${network.status}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="network-preview">
+                            <div class="preview-header">
+                                <span class="preview-title">
+                                    <i class="fas fa-code"></i>
+                                    Iframe Code Preview
+                                </span>
+                                <span class="text-muted">Last generated: ${network.lastGenerated ? new Date(network.lastGenerated).toLocaleString() : 'Never'}</span>
+                            </div>
+                            <div class="preview-code">
+                                ${escapeHtml(iframePreview)}
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; margin-top: 20px; justify-content: space-between; align-items: center;">
+                            <div>
+                                <span class="text-muted">
+                                    <i class="fas fa-globe"></i>
+                                    ${network.countryTargeting === 'all' ? 'All Countries' : 'Specific Countries'}
+                                </span>
+                                ${network.description ? `<span class="ms-3 text-muted"><i class="fas fa-info-circle"></i> ${escapeHtml(network.description)}</span>` : ''}
+                            </div>
+                            <div class="network-actions">
+                                <button class="btn-icon btn-edit" onclick="editNetwork('${network._id}')" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon ${toggleClass}" onclick="toggleNetwork('${network._id}')" title="${network.status === 'active' ? 'Deactivate' : 'Activate'}">
+                                    <i class="fas ${toggleIcon}"></i>
+                                </button>
+                                <button class="btn-icon btn-delete" onclick="deleteNetwork('${network._id}')" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Show empty state
+        function showEmptyState() {
+            document.getElementById('networksList').innerHTML = '';
+            document.getElementById('emptyState').style.display = 'block';
+        }
+        
+        // Open add network modal
+        function openAddNetworkModal() {
+            document.getElementById('modalTitle').textContent = 'Add New Network';
+            document.getElementById('networkForm').reset();
+            document.getElementById('networkId').value = '';
+            document.getElementById('customNameGroup').style.display = 'none';
+            document.getElementById('targetCountriesGroup').style.display = 'none';
+            document.getElementById('networkModal').classList.add('active');
+        }
+        
+        // Edit network
+        async function editNetwork(id) {
+            try {
+                const response = await fetch(`/api/admin/networks/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const network = data.network;
+                    
+                    document.getElementById('modalTitle').textContent = 'Edit Network';
+                    document.getElementById('networkId').value = network._id;
+                    document.getElementById('networkName').value = network.name;
+                    document.getElementById('iframeCode').value = network.iframeCode;
+                    document.getElementById('status').value = network.status;
+                    document.getElementById('displayOrder').value = network.displayOrder || 0;
+                    document.getElementById('countryTargeting').value = network.countryTargeting || 'all';
+                    document.getElementById('width').value = network.width || '100%';
+                    document.getElementById('height').value = network.height || '600px';
+                    document.getElementById('scrolling').value = network.scrolling || 'auto';
+                    document.getElementById('description').value = network.description || '';
+                    document.getElementById('icon').value = network.icon || 'fa-ad';
+                    document.getElementById('loading').value = network.loading || 'lazy';
+                    
+                    // Handle custom name
+                    if (network.customName) {
+                        document.getElementById('customName').value = network.customName;
+                        document.getElementById('customNameGroup').style.display = 'block';
+                    } else {
+                        document.getElementById('customNameGroup').style.display = 'none';
+                    }
+                    
+                    // Handle target countries
+                    if (network.countryTargeting === 'specific' && network.targetCountries) {
+                        const select = document.getElementById('targetCountries');
+                        const options = select.options;
+                        for (let i = 0; i < options.length; i++) {
+                            options[i].selected = network.targetCountries.includes(options[i].value);
+                        }
+                        document.getElementById('targetCountriesGroup').style.display = 'block';
+                    } else {
+                        document.getElementById('targetCountriesGroup').style.display = 'none';
+                    }
+                    
+                    document.getElementById('networkModal').classList.add('active');
+                } else {
+                    showToast('Failed to load network details', 'error');
+                }
+            } catch (error) {
+                console.error('Edit network error:', error);
+                showToast('Failed to load network', 'error');
+            }
+        }
+        
+        // Toggle custom name field
+        function toggleCustomName() {
+            const networkName = document.getElementById('networkName').value;
+            const customNameGroup = document.getElementById('customNameGroup');
+            
+            if (networkName === 'Other') {
+                customNameGroup.style.display = 'block';
+                document.getElementById('customName').required = true;
+            } else {
+                customNameGroup.style.display = 'none';
+                document.getElementById('customName').required = false;
+            }
+        }
+        
+        // Toggle target countries field
+        document.getElementById('countryTargeting').addEventListener('change', function() {
+            const targetCountriesGroup = document.getElementById('targetCountriesGroup');
+            targetCountriesGroup.style.display = this.value === 'specific' ? 'block' : 'none';
+        });
+        
+        // Save network
+        async function saveNetwork(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const networkId = document.getElementById('networkId').value;
+            const isEdit = !!networkId;
+            
+            const data = {
+                name: formData.get('name'),
+                customName: formData.get('customName'),
+                iframeCode: formData.get('iframeCode'),
+                status: formData.get('status'),
+                displayOrder: parseInt(formData.get('displayOrder')),
+                countryTargeting: formData.get('countryTargeting'),
+                width: formData.get('width'),
+                height: formData.get('height'),
+                scrolling: formData.get('scrolling'),
+                description: formData.get('description'),
+                icon: formData.get('icon'),
+                loading: formData.get('loading')
+            };
+            
+            // Add target countries if selected
+            if (data.countryTargeting === 'specific') {
+                const select = document.getElementById('targetCountries');
+                data.targetCountries = Array.from(select.selectedOptions).map(opt => opt.value);
+            }
+            
+            try {
+                const url = isEdit ? `/api/admin/networks/${networkId}` : '/api/admin/networks';
+                const method = isEdit ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(`Network ${isEdit ? 'updated' : 'added'} successfully!`, 'success');
+                    closeModal();
+                    loadNetworks();
+                } else {
+                    showToast(result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Save network error:', error);
+                showToast('Failed to save network', 'error');
+            }
+        }
+        
+        // Toggle network status
+        async function toggleNetwork(id) {
+            try {
+                const response = await fetch(`/api/admin/networks/${id}/toggle`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    loadNetworks();
+                } else {
+                    showToast('Failed to toggle network status', 'error');
+                }
+            } catch (error) {
+                console.error('Toggle network error:', error);
+                showToast('Failed to toggle network', 'error');
+            }
+        }
+        
+        // Delete network
+        async function deleteNetwork(id) {
+            if (!confirm('Are you sure you want to delete this network? This action cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/networks/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Network deleted successfully', 'success');
+                    loadNetworks();
+                } else {
+                    showToast('Failed to delete network', 'error');
+                }
+            } catch (error) {
+                console.error('Delete network error:', error);
+                showToast('Failed to delete network', 'error');
+            }
+        }
+        
+        // Regenerate offers page
+        async function regenerateOffersPage() {
+            try {
+                const response = await fetch('/api/admin/networks/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast(`Offers page generated successfully! (${data.networksCount} networks)`, 'success');
+                } else {
+                    showToast('Failed to generate offers page', 'error');
+                }
+            } catch (error) {
+                console.error('Generate offers page error:', error);
+                showToast('Failed to generate offers page', 'error');
+            }
+        }
+        
+        // Clear cache
+        async function clearCache() {
+            try {
+                const response = await fetch('/api/admin/networks/cache/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast(`Cache cleared successfully! (${data.count} networks)`, 'success');
+                    loadNetworks();
+                } else {
+                    showToast('Failed to clear cache', 'error');
+                }
+            } catch (error) {
+                console.error('Clear cache error:', error);
+                showToast('Failed to clear cache', 'error');
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('networkModal').classList.remove('active');
+        }
+        
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = toast.querySelector('i');
+            const messageEl = document.getElementById('toastMessage');
+            
+            toast.className = 'toast ' + type;
+            icon.className = 'fas ' + (type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle');
+            messageEl.textContent = message;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Escape HTML for preview
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('networkModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

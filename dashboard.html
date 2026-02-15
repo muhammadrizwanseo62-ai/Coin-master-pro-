@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CoinMaster Pro - Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Dashboard</h1>
+            <div class="balance-box">
+                <img src="images/icons/coin.png" alt="Coin" class="coin-icon">
+                <span id="balance">0.00</span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎮</div>
+                <div class="stat-info">
+                    <span class="stat-label">Games Today</span>
+                    <span class="stat-value" id="gamesToday">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <span class="stat-label">Earned Today</span>
+                    <span class="stat-value" id="earnedToday">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📺</div>
+                <div class="stat-info">
+                    <span class="stat-label">Ads Today</span>
+                    <span class="stat-value" id="adsToday">0/10</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-info">
+                    <span class="stat-label">Login Streak</span>
+                    <span class="stat-value" id="loginStreak">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Earnings Overview</h2>
+            <canvas id="earningsChart"></canvas>
+        </div>
+
+        <div class="earning-actions">
+            <button class="action-btn" id="dailyBonusBtn">
+                <span class="action-icon">🎁</span>
+                <span>Daily Bonus</span>
+                <span class="action-value" id="bonusValue">50</span>
+            </button>
+            <button class="action-btn" id="watchAdBtn">
+                <span class="action-icon">📺</span>
+                <span>Watch Ad</span>
+                <span class="action-value">25</span>
+            </button>
+            <button class="action-btn" id="referralBtn">
+                <span class="action-icon">👥</span>
+                <span>Referrals</span>
+                <span class="action-value" id="referralCount">0</span>
+            </button>
+        </div>
+
+        <div class="leaderboard-preview">
+            <h2>Top Players</h2>
+            <div id="leaderboardList"></div>
+            <button class="btn-view-all" onclick="window.location.href='leaderboard.html'">View All</button>
+        </div>
+
+        <div class="bottom-nav">
+            <button class="nav-btn active" onclick="window.location.href='dashboard.html'">📊</button>
+            <button class="nav-btn" onclick="window.location.href='game.html'">🎮</button>
+            <button class="nav-btn" onclick="window.location.href='leaderboard.html'">🏆</button>
+            <button class="nav-btn" onclick="window.location.href='profile.html'">👤</button>
+        </div>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
