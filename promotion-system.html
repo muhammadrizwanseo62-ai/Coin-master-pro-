@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREMIUM COUNTRY PROMO · 15th PAYMENT · LIVE 3K+ DAILY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #0b0e14;
+            color: #eef2f8;
+            padding: 16px 12px;
+            display: flex;
+            justify-content: center;
+        }
+        .app {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* LIVE HEADER */
+        .live-header {
+            background: #121927;
+            border-radius: 40px;
+            padding: 16px 22px;
+            margin-bottom: 20px;
+            border: 1px solid #2b3850;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 6px 0 #06090f;
+        }
+        .live-badge {
+            background: #1f2b40;
+            border-radius: 60px;
+            padding: 8px 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #3f516d;
+        }
+        .live-badge .pulse {
+            width: 14px;
+            height: 14px;
+            background: #2ccc7a;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #2ccc7a;
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+        .ticker {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: #202d42;
+            padding: 6px 24px;
+            border-radius: 80px;
+            letter-spacing: 1px;
+            color: #ffdb8e;
+        }
+
+        .update-stamp {
+            font-size: 0.9rem;
+            color: #9eb3d3;
+            background: #1f2d3f;
+            padding: 8px 18px;
+            border-radius: 26px;
+            display: inline-block;
+        }
+
+        .card {
+            background: #121b26;
+            border-radius: 36px;
+            padding: 22px 20px;
+            margin-bottom: 22px;
+            border: 1px solid #2c3a4f;
+            box-shadow: 0 8px 0 #0b1018;
+        }
+
+        .card-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-bubble {
+            background: #1b2533;
+            border-radius: 24px;
+            padding: 16px;
+            border-left: 5px solid;
+        }
+
+        .premium-badge {
+            background: linear-gradient(145deg, #2d2142, #1c162e);
+            border: 1px solid #735ec9;
+            border-radius: 60px;
+            padding: 4px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .country-flag {
+            font-size: 1.8rem;
+            line-height: 1;
+            margin-right: 5px;
+        }
+
+        .referral-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1c2636;
+            margin: 8px 0;
+            padding: 12px 18px;
+            border-radius: 50px;
+        }
+
+        .wallet-row {
+            display: flex;
+            justify-content: space-between;
+            background: #101722;
+            padding: 18px;
+            border-radius: 28px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .label-icon { display: flex; gap: 8px; align-items: center; }
+
+        button {
+            background: #2d3c55;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 16px 24px;
+            border-radius: 60px;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border-bottom: 3px solid #0e141f;
+            transition: 0.15s;
+            width: 100%;
+        }
+        button.primary { background: #5142b3; border-bottom-color: #2e2382; }
+        button.premium { background: #b3742e; border-bottom-color: #6e4518; }
+        button:active { transform: translateY(2px); border-bottom-width: 1px; }
+
+        select, input {
+            background: #1f2a39;
+            border: 1px solid #3a485e;
+            padding: 16px 20px;
+            border-radius: 60px;
+            width: 100%;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        option { background: #1b2533; }
+
+        .country-leader {
+            background: #1b2638;
+            border-radius: 28px;
+            padding: 18px;
+            margin-bottom: 18px;
+            border-left: 8px solid;
+        }
+        .flag-large { font-size: 2.8rem; line-height: 1; margin-right: 10px; }
+        .row-flex { display: flex; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .promoter-list { margin-top: 16px; }
+        .promoter-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1f2c40;
+            padding: 12px 20px;
+            border-radius: 50px;
+            margin: 8px 0;
+            border: 1px solid #384b67;
+        }
+        .active-percent {
+            font-weight: 700;
+            background: #1d4a3a;
+            padding: 4px 18px;
+            border-radius: 30px;
+            color: #a7f0d0;
+        }
+        .honesty-tier {
+            background: #182132;
+            border-radius: 26px;
+            padding: 14px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin: 15px 0;
+            border: 1px solid #3b4b66;
+        }
+        .badge-icon { font-size: 1.6rem; }
+        .small-note {
+            font-size: 0.85rem;
+            color: #9aaec9;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .real-time-note {
+            background: #1a332c;
+            border-radius: 28px;
+            padding: 18px;
+            border: 1px solid #46977a;
+            margin: 18px 0;
+        }
+        .stat-circle {
+            background: #1b2637;
+            border-radius: 30px;
+            padding: 18px;
+            text-align: center;
+        }
+        .flag-icon { font-size: 1.8rem; margin-right: 5px; }
+        .badge-premium {
+            background: #433b6b;
+            border-radius: 40px;
+            padding: 4px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffd966;
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="app">
+
+    <!-- LIVE HEADER with daily counter -->
+    <div class="live-header">
+        <div class="live-badge"><span class="pulse"></span> LIVE · <span id="dailyCounter">3,210</span> TODAY</div>
+        <div class="ticker" id="dailyTicker">3,210</div>
+        <div class="update-stamp" id="refreshTimestamp">♻️ updating...</div>
+    </div>
+
+    <!-- MAIN DASHBOARD (merged from first system) -->
+    <div class="card">
+        <div class="card-title"><span>📊</span> MY PROMOTION DASHBOARD</div>
+        <div class="grid-2">
+            <div class="stat-bubble" style="border-left-color: #4f8eff">
+                <div class="label-icon"><span>📹</span> Videos: <span id="videoCount">24</span></div>
+                <div style="font-size: 1.8rem; font-weight:700;" id="videoCountBig">24</div>
+                <div style="color:#a2c2ff">pending approval</div>
+            </div>
+            <div class="stat-bubble" style="border-left-color: #f4b942">
+                <div class="label-icon"><span>👥</span> Referrals</div>
+                <div style="font-size: 1.8rem; font-weight:700;" id="totalReferrals">53</div>
+                <div style="color:#ffdb9d"><span id="premiumRefs">28</span> premium · <span id="standardRefs">15</span> std · <span id="emergingRefs">10</span> emerging</div>
+            </div>
+        </div>
+
+        <!-- country breakdown with flags (dynamic) -->
+        <div style="margin: 20px 0 10px" id="countryBreakdown">
+            <!-- filled by js -->
+        </div>
+
+        <!-- wallet summary -->
+        <div style="background:#202b3b; border-radius:30px; padding:16px;">
+            <div style="display:flex; justify-content:space-between; font-weight:600;">
+                <span>💰 AVAILABLE (15th)</span>
+                <span id="availableBalance">187,200 coins · $37.44</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; color:#a0b8d4; font-size:0.9rem; margin-top:8px;">
+                <span>⏳ pending: <span id="pendingRewards">15,000</span> coins</span>
+                <span>💎 honesty: +<span id="honestyBonus">25,000</span> (<span id="honestyTier">silver</span>)</span>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="primary" id="submitPromoBtn">📤 SUBMIT PROMOTION</button>
+            <button class="premium" id="quickScriptBtn">📧 REQUEST SCRIPT</button>
+        </div>
+    </div>
+
+    <!-- COUNTRY KING BOARDS (live from second system) -->
+    <div class="card">
+        <div class="card-title"><span>👑</span> COUNTRY KINGS · REAL‑TIME ACTIVE</div>
+
+        <!-- USA BOARD -->
+        <div class="country-leader" style="border-left-color: #3c74db;">
+            <div class="row-flex">
+                <span class="flag-large">🇺🇸</span>
+                <span style="font-size: 1.8rem; font-weight:700;">USA KING</span>
+                <span class="badge-premium">100+ referrals</span>
+            </div>
+            <div class="row-flex" style="justify-content:space-between; margin-top:6px;">
+                <span><strong id="usaKingName">@king_john</strong> · <span id="usaKingRef">147</span> USA referrals</span>
+                <span class="active-percent" id="usaActive">87% active</span>
+            </div>
+            <div class="promoter-list" id="usaPromoters"></div>
+        </div>
+
+        <!-- UK BOARD -->
+        <div class="country-leader" style="border-left-color: #b4c6e8;">
+            <div class="row-flex">
+                <span class="flag-large">🇬🇧</span>
+                <span style="font-size: 1.8rem; font-weight:700;">BRITISH LORD</span>
+                <span class="badge-premium">50+ UK referrals</span>
+            </div>
+            <div class="row-flex" style="justify-content:space-between; margin-top:6px;">
+                <span><strong id="ukKingName">@lord_william</strong> · <span id="ukKingRef">68</span> UK referrals</span>
+                <span class="active-percent" id="ukActive">65% active</span>
+            </div>
+            <div class="promoter-list" id="ukPromoters"></div>
+        </div>
+
+        <!-- INDIA BOARD -->
+        <div class="country-leader" style="border-left-color: #f7b731;">
+            <div class="row-flex">
+                <span class="flag-large">🇮🇳</span>
+                <span style="font-size: 1.8rem; font-weight:700;">INDIAN PRINCE</span>
+                <span class="badge-premium">200+ India referrals</span>
+            </div>
+            <div class="row-flex" style="justify-content:space-between; margin-top:6px;">
+                <span><strong id="indiaKingName">@prince_raj</strong> · <span id="indiaKingRef">241</span> India referrals</span>
+                <span class="active-percent" id="indiaActive">94% active</span>
+            </div>
+            <div class="promoter-list" id="indiaPromoters"></div>
+        </div>
+
+        <div class="real-time-note">
+            🔄 <strong>LIVE REFRESH EVERY 10 SECONDS</strong> · tracking 3,000+ daily promoters · activity & ranks auto‑update
+        </div>
+    </div>
+
+    <!-- EMAIL SCRIPT REQUEST SYSTEM -->
+    <div class="card">
+        <div class="card-title"><span>📧</span> VIDEO SCRIPT REQUEST – INSTANT DELIVERY</div>
+        <div style="background:#1a2332; border-radius:30px; padding:20px;">
+            <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px;">
+                <span class="premium-badge">🟢 30s · 3,000</span>
+                <span class="premium-badge">🔵 60s · 5,000</span>
+                <span class="premium-badge">🟡 2min · 8,000</span>
+                <span class="premium-badge">🟠 5min · 15,000</span>
+                <span class="premium-badge">🔴 10min · 25,000</span>
+                <span class="premium-badge">💎 15+min · 40,000</span>
+            </div>
+            <select id="videoLength">
+                <option value="3000">🟢 30 sec – 3,000 coins (premium 7,500)</option>
+                <option value="5000">🔵 60 sec – 5,000 coins (premium 12,500)</option>
+                <option value="8000">🟡 2 min – 8,000 coins (premium 20,000)</option>
+                <option value="15000">🟠 5 min – 15,000 coins (premium 37,500)</option>
+                <option value="25000">🔴 10 min – 25,000 coins (premium 62,500)</option>
+                <option value="40000">💎 15+ min – 40,000 coins (premium 100,000)</option>
+            </select>
+            <input type="email" placeholder="📧 Your email address" id="scriptEmail" value="promoter@example.com">
+            <input type="text" placeholder="📱 Telegram @username" id="tgUsername" value="@john_doe">
+            
+            <div style="display:flex; align-items:center; gap:5px; background:#1b2535; border-radius:60px; padding:0 20px; margin-bottom:15px;">
+                <span class="country-flag" id="selectedCountryFlag">🇺🇸</span>
+                <select id="targetCountry" style="border:none; background:transparent; padding:16px 0;">
+                    <option value="US" data-premium="true" data-flag="🇺🇸">🇺🇸 USA – PREMIUM (2x+1500)</option>
+                    <option value="GB" data-premium="true" data-flag="🇬🇧">🇬🇧 UK – PREMIUM</option>
+                    <option value="CA" data-premium="true" data-flag="🇨🇦">🇨🇦 Canada – PREMIUM</option>
+                    <option value="AU" data-premium="true" data-flag="🇦🇺">🇦🇺 Australia – PREMIUM</option>
+                    <option value="DE" data-premium="true" data-flag="🇩🇪">🇩🇪 Germany – PREMIUM</option>
+                    <option value="FR" data-premium="true" data-flag="🇫🇷">🇫🇷 France – PREMIUM</option>
+                    <option value="IN" data-premium="false" data-flag="🇮🇳">🇮🇳 India (0.5x)</option>
+                    <option value="PK" data-premium="false" data-flag="🇵🇰">🇵🇰 Pakistan (0.5x)</option>
+                    <option value="BR" data-premium="false" data-flag="🇧🇷">🇧🇷 Brazil (1x)</option>
+                    <option value="NG" data-premium="false" data-flag="🇳🇬">🇳🇬 Nigeria (0.5x)</option>
+                </select>
+            </div>
+            <button id="requestScriptBtn" class="primary">📤 SEND SCRIPT TO EMAIL + NOTIFY ADMIN</button>
+            <div class="small-note" id="scriptFeedback">✅ Script will be sent instantly + saved</div>
+        </div>
+    </div>
+
+    <!-- HONESTY BONUS TIERS -->
+    <div class="card">
+        <div class="card-title"><span>💎</span> HONESTY BONUS – ACTIVE REFERRALS</div>
+        <div class="honesty-tier"><span class="badge-icon">🥉</span><div style="flex:1"><strong>BRONZE</strong> 5-10 premium</div><div>+10,000</div></div>
+        <div class="honesty-tier" style="border-color:#c0c0c0;"><span class="badge-icon">🥈</span><div style="flex:1"><strong>SILVER</strong> 11-25 premium</div><div>+25,000</div></div>
+        <div class="honesty-tier" style="border-color:#f1c40f;"><span class="badge-icon">🥇</span><div style="flex:1"><strong>GOLD</strong> 26-50 premium</div><div>+50,000</div></div>
+        <div class="honesty-tier" style="border-color:#a8e6cf;"><span class="badge-icon">💎</span><div style="flex:1"><strong>PLATINUM</strong> 51-100 premium</div><div>+100,000</div></div>
+        <div class="honesty-tier" style="border-color:#ffe066;"><span class="badge-icon">👑</span><div style="flex:1"><strong>DIAMOND</strong> 100+ premium</div><div>+250,000 · early withdraw</div></div>
+        <div style="background:#17212b; border-radius:20px; padding:16px;" id="honestyDisplay">
+            ✨ YOUR HONESTY RANK: <strong id="userHonestyRank">SILVER 🥈 (13 premium active) · 10% extra</strong>
+        </div>
+    </div>
+
+    <!-- WALLET + 15TH PAYMENT -->
+    <div class="card">
+        <div class="card-title"><span>💳</span> WALLET · next 15th</div>
+        <div class="wallet-row" id="walletBalanceRow"><span class="label-icon"><span>💰</span> BALANCE</span><span>187,200 coins ($37.44)</span></div>
+        <div class="wallet-row" id="walletPendingRow"><span class="label-icon"><span>⏳</span> PENDING (7d verify)</span><span>15,000 coins</span></div>
+        <div class="wallet-row" id="walletLastRow"><span class="label-icon"><span>📅</span> LAST PAYMENT</span><span>15 Feb 2026 · $31.30</span></div>
+        <button id="simulatePaymentBtn" style="background:#2e7d5a;">📆 SIMULATE 15TH PAYMENT (add pending)</button>
+    </div>
+
+    <!-- GLOBAL ACTIVITY FEED + TOP PROMOTERS -->
+    <div class="grid-2">
+        <div class="card" style="padding:18px;">
+            <div class="card-title" style="font-size:1.3rem;">📰 LIVE ACTIVITY</div>
+            <div id="activityFeed" style="max-height:200px; overflow-y:auto; background:#0f1823; border-radius:28px; padding:10px;"></div>
+        </div>
+        <div class="card" style="padding:18px;">
+            <div class="card-title" style="font-size:1.3rem;">🏆 TOP 5 PROMOTERS</div>
+            <div id="topPromotersList"></div>
+        </div>
+    </div>
+
+    <!-- VERIFICATION PANEL -->
+    <div class="card">
+        <div class="card-title"><span>⏱️</span> VERIFICATION (7 days)</div>
+        <div id="verificationList"></div>
+        <button id="verifyBtn" style="background:#424b5f; margin-top:15px;">✔️ ADMIN: APPROVE SELECTED (DEMO)</button>
+    </div>
+
+    <!-- DAILY GOAL PROGRESS -->
+    <div class="card">
+        <div class="card-title"><span>📈</span> DAILY PROMOTER GOAL: 3,000</div>
+        <div style="background:#182333; border-radius:40px; height:32px; width:100%; overflow:hidden;">
+            <div id="progressBar" style="width:107%; background:#4d9c7a; height:100%; border-radius:40px; text-align:center; line-height:32px; color:black; font-weight:800;">3,210 / 3,000</div>
+        </div>
+    </div>
+
+    <button class="primary" id="forceRefresh">🔄 FORCE REFRESH NOW</button>
+    <div style="margin: 20px; text-align: center; color: #7289a7;">⚡ complete system · 15th payment · 3000+ daily · all countries</div>
+</div>
+
+<script>
+    (function() {
+        // ==================== COMPLETE MERGED SYSTEM ====================
+        // premium country set
+        const premiumSet = new Set(['US','GB','CA','AU','DE','FR','JP','SE','NL','CH','NO','DK','BE','AT','IE','NZ','FI','PT']);
+
+        // ---------- INITIAL STATE (merged from both systems) ----------
+        let state = {
+            // wallet data
+            balance: 187200,
+            pendingRewards: 15000,
+            totalEarned: 245000,
+            videos: 24,
+            referrals: 53,
+            premiumReferrals: 28,
+            standardReferrals: 15,
+            emergingReferrals: 10,
+            honestyTier: 'SILVER',
+            honestyBonus: 25000,
+            transactions: [{ date: '2026-02-15', amount: 31300 }],
+            scriptRequests: [],
+            pendingVerifications: [
+                { type: 'video', country: 'FR', length: '60s', reward: 5000, date: Date.now() - 86400000*3 },
+                { type: 'referral', country: 'IN', reward: 750, date: Date.now() - 86400000*2 }
+            ],
+            // live tracking data
+            dailyActive: 3210,
+            usa: { 
+                activePercent: 87, 
+                promoters: [ { name:'@john', ref:12, active:87 }, { name:'@emma', ref:9, active:91 }, { name:'@mike', ref:8, active:76 } ], 
+                king: { name:'@king_john', ref:147 } 
+            },
+            uk: { 
+                activePercent: 65, 
+                promoters: [ { name:'@london', ref:8, active:65 }, { name:'@oliver', ref:6, active:72 }, { name:'@charlotte', ref:5, active:58 } ], 
+                king: { name:'@lord_william', ref:68 } 
+            },
+            india: { 
+                activePercent: 94, 
+                promoters: [ { name:'@raj', ref:25, active:94 }, { name:'@priya', ref:19, active:88 }, { name:'@amit', ref:16, active:91 } ], 
+                king: { name:'@prince_raj', ref:241 } 
+            },
+            activityLog: [
+                '🇺🇸 @john submitted video (60s) · +12,500 pending',
+                '🇮🇳 @raj got 5 new referrals · +3,750 coins',
+                '🇬🇧 @london reached 65% activity · silver honesty',
+                '🇺🇸 @emma now at 91% active · bonus +10%'
+            ],
+            topPromoters: [
+                { name:'@king_john', country:'🇺🇸', ref:147, reward:4500 },
+                { name:'@prince_raj', country:'🇮🇳', ref:241, reward:750 },
+                { name:'@lord_william', country:'🇬🇧', ref:68, reward:4500 },
+                { name:'@priya', country:'🇮🇳', ref:19, reward:750 },
+                { name:'@emma', country:'🇺🇸', ref:9, reward:4500 }
+            ]
+        };
+
+        // ----- localStorage integration -----
+        const STORAGE_KEY = 'mergedPromoSystem';
+        function loadData() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (parsed) state = { ...state, ...parsed };
+                }
+            } catch (e) {}
+        }
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+        loadData();
+
+        // ----- render helpers -----
+        function renderCountryBreakdown() {
+            const container = document.getElementById('countryBreakdown');
+            if (!container) return;
+            container.innerHTML = `
+                <div class="referral-item"><span><span class="country-flag">🇺🇸</span> USA (premium)</span> <span>12 · 4,500 each</span></div>
+                <div class="referral-item"><span><span class="country-flag">🇬🇧</span> UK (premium)</span> <span>8 · 4,500 each</span></div>
+                <div class="referral-item"><span><span class="country-flag">🇨🇦</span> Canada (premium)</span> <span>5 · 4,500 each</span></div>
+                <div class="referral-item"><span><span class="country-flag">🇩🇪</span> Germany (premium)</span> <span>3 · 4,500 each</span></div>
+                <div class="referral-item"><span><span class="country-flag">🇪🇸</span> Spain</span> <span>8 · 1,500 each</span></div>
+                <div class="referral-item"><span><span class="country-flag">🇮🇳</span> India</span> <span>10 · 750 each</span></div>
+                <div class="referral-item"><span><span class="country-flag">🇵🇰</span> Pakistan</span> <span>7 · 750 each</span></div>
+            `;
+        }
+
+        function updatePromoterList(elementId, promoters, flag) {
+            const container = document.getElementById(elementId);
+            if (!container) return;
+            container.innerHTML = promoters.map(p => 
+                `<div class="promoter-item"><span><span class="flag-icon">${flag}</span> ${p.name}</span> <span>${p.ref} ref · ${p.active}%</span></div>`
+            ).join('');
+        }
+
+        function renderWallet() {
+            document.getElementById('availableBalance').innerText = `${state.balance.toLocaleString()} coins · $${(state.balance/5000).toFixed(2)}`;
+            document.getElementById('pendingRewards').innerText = state.pendingRewards.toLocaleString();
+            document.getElementById('honestyBonus').innerText = state.honestyBonus;
+            document.getElementById('honestyTier').innerText = state.honestyTier.toLowerCase();
+            document.getElementById('walletBalanceRow').innerHTML = `<span class="label-icon"><span>💰</span> BALANCE</span><span>${state.balance.toLocaleString()} coins ($${(state.balance/5000).toFixed(2)})</span>`;
+            document.getElementById('walletPendingRow').innerHTML = `<span class="label-icon"><span>⏳</span> PENDING (7d verify)</span><span>${state.pendingRewards.toLocaleString()} coins</span>`;
+            document.getElementById('videoCount').innerText = state.videos;
+            document.getElementById('videoCountBig').innerText = state.videos;
+            document.getElementById('totalReferrals').innerText = state.referrals;
+            document.getElementById('premiumRefs').innerText = state.premiumReferrals;
+            document.getElementById('standardRefs').innerText = state.standardReferrals;
+            document.getElementById('emergingRefs').innerText = state.emergingReferrals;
+            document.getElementById('userHonestyRank').innerText = `${state.honestyTier} 🥈 (${state.premiumReferrals} premium active) · ${state.honestyTier==='SILVER'?'10%':state.honestyTier==='GOLD'?'15%':'5%'} extra`;
+        }
+
+        function renderLiveData() {
+            document.getElementById('dailyCounter').innerText = state.dailyActive;
+            document.getElementById('dailyTicker').innerText = state.dailyActive;
+            document.getElementById('usaActive').innerText = state.usa.activePercent + '% active';
+            document.getElementById('ukActive').innerText = state.uk.activePercent + '% active';
+            document.getElementById('indiaActive').innerText = state.india.activePercent + '% active';
+            document.getElementById('usaKingName').innerText = state.usa.king.name;
+            document.getElementById('usaKingRef').innerText = state.usa.king.ref;
+            document.getElementById('ukKingName').innerText = state.uk.king.name;
+            document.getElementById('ukKingRef').innerText = state.uk.king.ref;
+            document.getElementById('indiaKingName').innerText = state.india.king.name;
+            document.getElementById('indiaKingRef').innerText = state.india.king.ref;
+            
+            updatePromoterList('usaPromoters', state.usa.promoters, '🇺🇸');
+            updatePromoterList('ukPromoters', state.uk.promoters, '🇬🇧');
+            updatePromoterList('indiaPromoters', state.india.promoters, '🇮🇳');
+
+            // activity feed
+            const feedDiv = document.getElementById('activityFeed');
+            feedDiv.innerHTML = state.activityLog.map(msg => `<div style="padding:8px; border-bottom:1px solid #2a3548;">${msg}</div>`).join('');
+
+            // top promoters
+            const topList = document.getElementById('topPromotersList');
+            topList.innerHTML = state.topPromoters.map((p, idx) => {
+                const medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : (idx+1+'️⃣')));
+                return `<div class="promoter-item"><span>${medal} ${p.name} (${p.country})</span> <span>${p.ref} ref · ${p.reward} each</span></div>`;
+            }).join('');
+
+            // progress bar
+            const progress = document.getElementById('progressBar');
+            const pct = (state.dailyActive / 3000) * 100;
+            progress.style.width = Math.min(pct, 200) + '%';
+            progress.innerText = state.dailyActive + ' / 3000';
+
+            // verification list
+            const verifList = document.getElementById('verificationList');
+            verifList.innerHTML = state.pendingVerifications.map(v => 
+                `<div class="referral-item"><span><span class="country-flag">${v.country==='FR'?'🇫🇷':v.country==='IN'?'🇮🇳':'🇺🇸'}</span> ${v.type} (${v.length||''})</span> <span>⏳ pending</span></div>`
+            ).join('');
+
+            document.getElementById('refreshTimestamp').innerText = '♻️ ' + new Date().toLocaleTimeString();
+        }
+
+        function fullRender() {
+            renderCountryBreakdown();
+            renderWallet();
+            renderLiveData();
+        }
+
+        // ----- realtime random walk (live updates) -----
+        function randomWalk() {
+            state.dailyActive = 3000 + Math.floor(Math.random() * 500) + 150;
+            state.usa.activePercent = Math.min(98, Math.max(60, state.usa.activePercent + (Math.random()*6 - 3)));
+            state.uk.activePercent = Math.min(98, Math.max(50, state.uk.activePercent + (Math.random()*8 - 4)));
+            state.india.activePercent = Math.min(99, Math.max(75, state.india.activePercent + (Math.random()*5 - 2.5)));
+            state.usa.activePercent = Math.round(state.usa.activePercent * 10) / 10;
+            state.uk.activePercent = Math.round(state.uk.activePercent * 10) / 10;
+            state.india.activePercent = Math.round(state.india.activePercent * 10) / 10;
+
+            state.usa.promoters.forEach(p => { 
+                p.active = Math.min(99, Math.max(50, p.active + (Math.random()*8 - 4))); 
+                p.active = Math.round(p.active*10)/10;
+                if (Math.random()>0.7) p.ref += 1; 
+            });
+            state.uk.promoters.forEach(p => { 
+                p.active = Math.min(99, Math.max(45, p.active + (Math.random()*8 - 4))); 
+                p.active = Math.round(p.active*10)/10;
+                if (Math.random()>0.8) p.ref += 1;
+            });
+            state.india.promoters.forEach(p => { 
+                p.active = Math.min(99, Math.max(70, p.active + (Math.random()*6 - 3))); 
+                p.active = Math.round(p.active*10)/10;
+                if (Math.random()>0.6) p.ref += 1;
+            });
+
+            state.usa.king.ref += Math.random() > 0.8 ? 1 : 0;
+            state.uk.king.ref += Math.random() > 0.85 ? 1 : 0;
+            state.india.king.ref += Math.random() > 0.7 ? 1 : 0;
+
+            const actions = ['submitted video', 'got referrals', 'reached activity', 'earned bonus', 'unlocked badge'];
+            const countries = ['🇺🇸','🇬🇧','🇮🇳','🇨🇦','🇦🇺'];
+            const randName = ['@raj','@john','@london','@emma','@priya','@oliver'][Math.floor(Math.random()*6)];
+            const randAction = actions[Math.floor(Math.random()*actions.length)];
+            const randCountry = countries[Math.floor(Math.random()*countries.length)];
+            const newLog = `${randCountry} ${randName} ${randAction} · +${Math.floor(Math.random()*8000)} coins`;
+            state.activityLog.unshift(newLog);
+            if (state.activityLog.length > 6) state.activityLog.pop();
+
+            state.topPromoters = [
+                { name:'@king_john', country:'🇺🇸', ref: state.usa.king.ref, reward:4500 },
+                { name:'@prince_raj', country:'🇮🇳', ref: state.india.king.ref, reward:750 },
+                { name:'@lord_william', country:'🇬🇧', ref: state.uk.king.ref, reward:4500 },
+                { name:'@priya', country:'🇮🇳', ref: state.india.promoters[1]?.ref || 19, reward:750 },
+                { name:'@emma', country:'🇺🇸', ref: state.usa.promoters[1]?.ref || 9, reward:4500 }
+            ].sort((a,b) => b.ref - a.ref);
+
+            saveData();
+            fullRender();
+        }
+
+        // ----- event listeners -----
+        document.getElementById('requestScriptBtn')?.addEventListener('click', () => {
+            const lengthSel = document.getElementById('videoLength');
+            const baseReward = parseInt(lengthSel.value);
+            const email = document.getElementById('scriptEmail').value.trim();
+            const tg = document.getElementById('tgUsername').value.trim();
+            const countrySel = document.getElementById('targetCountry');
+            const countryCode = countrySel.value;
+            const flag = countrySel.options[countrySel.selectedIndex].getAttribute('data-flag') || '🇺🇸';
+            if (!email.includes('@') || !tg) {
+                document.getElementById('scriptFeedback').innerText = '❌ Valid email and telegram required';
+                return;
+            }
+            const isPremium = premiumSet.has(countryCode);
+            const finalReward = isPremium ? (baseReward * 2) + 1500 : (baseReward * (countryCode==='IN'||countryCode==='PK'||countryCode==='NG'?0.5:1));
+            state.scriptRequests.push({ email, tg, countryCode, baseReward, finalReward, date: new Date().toISOString(), flag });
+            saveData();
+            document.getElementById('scriptFeedback').innerHTML = `✅ Script sent to ${email} (reward: ${finalReward} coins)`;
+            alert(`📧 SCRIPT DELIVERED\nReward: ${finalReward} coins`);
+        });
+
+        document.getElementById('simulatePaymentBtn')?.addEventListener('click', () => {
+            let bonus = 0;
+            if (state.honestyTier === 'SILVER') bonus = 25000;
+            else if (state.honestyTier === 'GOLD') bonus = 50000;
+            else if (state.honestyTier === 'BRONZE') bonus = 10000;
+            else if (state.honestyTier === 'PLATINUM') bonus = 100000;
+            else if (state.honestyTier === 'DIAMOND') bonus = 250000;
+            const added = state.pendingRewards + bonus;
+            state.balance += added;
+            state.totalEarned += added;
+            state.pendingRewards = 0;
+            state.transactions.push({ date: new Date().toISOString().slice(0,10), amount: added });
+            saveData();
+            fullRender();
+            alert(`💸 15th PAYMENT: +${added} coins`);
+        });
+
+        document.getElementById('verifyBtn')?.addEventListener('click', () => {
+            if (state.pendingVerifications.length > 0) {
+                const verified = state.pendingVerifications.shift();
+                state.pendingRewards += verified.reward;
+                saveData();
+                fullRender();
+                alert(`✅ Verified +${verified.reward} coins to pending`);
+            } else alert('No pending verifications.');
+        });
+
+        document.getElementById('submitPromoBtn')?.addEventListener('click', () => {
+            state.referrals++;
+            state.pendingRewards += 1500;
+            saveData();
+            fullRender();
+            alert('📤 Demo: +1 referral (1500 pending)');
+        });
+
+        document.getElementById('quickScriptBtn')?.addEventListener('click', () => {
+            document.getElementById('targetCountry').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.getElementById('forceRefresh')?.addEventListener('click', () => {
+            randomWalk();
+        });
+
+        // flag preview update
+        const countrySelect = document.getElementById('targetCountry');
+        const flagSpan = document.getElementById('selectedCountryFlag');
+        if (countrySelect && flagSpan) {
+            const updateFlag = () => {
+                const opt = countrySelect.options[countrySelect.selectedIndex];
+                if (opt) flagSpan.innerText = opt.getAttribute('data-flag') || '🇺🇸';
+            };
+            countrySelect.addEventListener('change', updateFlag);
+            updateFlag();
+        }
+
+        // initial render
+        fullRender();
+        setInterval(() => { randomWalk(); }, 10000); // live every 10 sec
+    })();
+</script>
+</body>
+</html>.

@@ -1,0 +1,1006 @@
+/* CoinMaster Pro - Responsive Design */
+/* Mobile-first responsive styles */
+
+/* ===== BASE RESPONSIVE SETTINGS ===== */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    font-size: 16px;
+}
+
+/* ===== EXTRA SMALL DEVICES (Phones, less than 576px) ===== */
+@media (max-width: 575.98px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .screen {
+        padding: 15px;
+        padding-bottom: 80px;
+        min-height: 100vh;
+        width: 100%;
+    }
+    
+    /* Loading Screen */
+    .loading-content {
+        padding: 20px;
+    }
+    
+    .logo i {
+        font-size: 3rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+    
+    .tagline {
+        font-size: 0.9rem;
+    }
+    
+    .spinner {
+        width: 50px;
+        height: 50px;
+    }
+    
+    /* Login Screen */
+    .telegram-login {
+        padding: 20px;
+        margin: 20px 0;
+    }
+    
+    .telegram-icon {
+        font-size: 2.5rem;
+    }
+    
+    .telegram-info h2 {
+        font-size: 1.3rem;
+    }
+    
+    .telegram-info p {
+        font-size: 0.9rem;
+    }
+    
+    .btn-telegram {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+    
+    .benefits h3 {
+        font-size: 1.1rem;
+    }
+    
+    .benefits li {
+        font-size: 0.9rem;
+    }
+    
+    .referral-section {
+        padding: 15px;
+    }
+    
+    .referral-input {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .referral-input input {
+        width: 100%;
+    }
+    
+    .btn-referral {
+        width: 100%;
+    }
+    
+    /* Dashboard */
+    .header {
+        padding: 15px;
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+    
+    .user-info {
+        gap: 12px;
+    }
+    
+    .avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        min-width: 50px;
+    }
+    
+    .user-details h2 {
+        font-size: 1.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+    
+    .user-id {
+        font-size: 0.8rem;
+    }
+    
+    .balance h3 {
+        font-size: 0.9rem;
+    }
+    
+    .coin-display {
+        font-size: 1.8rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .coin-text {
+        font-size: 0.9rem;
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Cards */
+    .card {
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+    
+    .card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .referral-code {
+        flex-direction: column;
+        gap: 10px;
+        margin: 10px 0;
+    }
+    
+    .referral-code code {
+        font-size: 1rem;
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .btn-copy {
+        width: 100%;
+        border-radius: var(--border-radius);
+        height: auto;
+        padding: 10px;
+    }
+    
+    .referral-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .stat {
+        padding: 12px;
+    }
+    
+    .stat h4 {
+        font-size: 0.8rem;
+    }
+    
+    .stat p {
+        font-size: 1.3rem;
+    }
+    
+    /* Actions Grid */
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .action-card {
+        padding: 15px;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .action-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+    
+    .action-card h4 {
+        font-size: 0.95rem;
+        margin-bottom: 5px;
+    }
+    
+    .action-card p {
+        font-size: 0.8rem;
+    }
+    
+    .action-badge {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+        top: 5px;
+        right: 5px;
+    }
+    
+    /* Activity */
+    .activity-card {
+        padding: 15px;
+    }
+    
+    .activity-item {
+        padding: 12px;
+    }
+    
+    .activity-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+        min-width: 35px;
+    }
+    
+    .activity-details p {
+        font-size: 0.9rem;
+    }
+    
+    .activity-time {
+        font-size: 0.75rem;
+    }
+    
+    .activity-amount {
+        font-size: 1rem;
+    }
+    
+    /* Bottom Navigation */
+    .bottom-nav {
+        padding: 8px 5px;
+        height: 65px;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .nav-btn {
+        padding: 8px 5px;
+        min-width: 60px;
+    }
+    
+    .nav-btn i {
+        font-size: 1.2rem;
+        margin-bottom: 3px;
+    }
+    
+    .nav-btn span {
+        font-size: 0.7rem;
+    }
+    
+    /* Modal */
+    .modal {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+    }
+    
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    /* Toast */
+    .toast {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: calc(100% - 20px);
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+    
+    /* Hide elements on mobile */
+    .desktop-only {
+        display: none !important;
+    }
+    
+    /* Safe area for notch phones */
+    @supports (padding: max(0px)) {
+        .screen {
+            padding-left: max(15px, env(safe-area-inset-left));
+            padding-right: max(15px, env(safe-area-inset-right));
+            padding-bottom: max(80px, env(safe-area-inset-bottom) + 70px);
+        }
+        
+        .bottom-nav {
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
+            height: calc(65px + env(safe-area-inset-bottom));
+        }
+    }
+}
+
+/* ===== SMALL DEVICES (Tablets, 576px to 767px) ===== */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .container {
+        max-width: 540px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+    
+    .screen {
+        padding: 20px;
+        padding-bottom: 85px;
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .referral-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .avatar {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .bottom-nav {
+        max-width: 540px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* ===== MEDIUM DEVICES (Tablets, 768px to 991px) ===== */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    .screen {
+        padding: 25px;
+        padding-bottom: 90px;
+    }
+    
+    .logo i {
+        font-size: 4.5rem;
+    }
+    
+    .logo h1 {
+        font-size: 2.2rem;
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    
+    .action-card {
+        min-height: 140px;
+    }
+    
+    .bottom-nav {
+        max-width: 720px;
+        padding: 12px 0;
+    }
+    
+    .nav-btn {
+        font-size: 1rem;
+    }
+    
+    .nav-btn i {
+        font-size: 1.4rem;
+    }
+    
+    .modal-content {
+        max-width: 90%;
+    }
+}
+
+/* ===== LARGE DEVICES (Desktops, 992px to 1199px) ===== */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    .screen {
+        padding: 30px;
+        padding-bottom: 95px;
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    
+    .bottom-nav {
+        max-width: 960px;
+    }
+}
+
+/* ===== EXTRA LARGE DEVICES (Large desktops, 1200px and up) ===== */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+    
+    .bottom-nav {
+        max-width: 1140px;
+    }
+}
+
+/* ===== LANDSCAPE ORIENTATION ===== */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        min-height: 100vh;
+    }
+    
+    .screen {
+        padding-bottom: 70px;
+        min-height: 100vh;
+    }
+    
+    .loading-content {
+        padding-top: 20px;
+        min-height: auto;
+    }
+    
+    .logo {
+        margin-bottom: 20px;
+    }
+    
+    .logo i {
+        font-size: 2.5rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+    
+    .spinner {
+        width: 40px;
+        height: 40px;
+        margin: 15px 0;
+    }
+    
+    .telegram-login {
+        margin: 15px 0;
+        padding: 15px;
+    }
+    
+    .benefits {
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+    
+    .header {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+    }
+    
+    .user-info {
+        margin-bottom: 10px;
+    }
+    
+    .avatar {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .user-details h2 {
+        font-size: 1.1rem;
+    }
+    
+    .balance h3 {
+        margin-bottom: 5px;
+    }
+    
+    .coin-display {
+        font-size: 1.5rem;
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .action-card {
+        padding: 10px;
+        min-height: 100px;
+    }
+    
+    .action-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    
+    .action-card h4 {
+        font-size: 0.9rem;
+        margin-bottom: 3px;
+    }
+    
+    .action-card p {
+        font-size: 0.75rem;
+    }
+    
+    .card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .activity-item {
+        padding: 10px;
+    }
+    
+    .bottom-nav {
+        height: 60px;
+    }
+    
+    .nav-btn {
+        padding: 8px 5px;
+    }
+    
+    .nav-btn i {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+    
+    .nav-btn span {
+        font-size: 0.7rem;
+    }
+}
+
+/* ===== HIGH-DPI / RETINA DISPLAYS ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .logo i,
+    .action-icon,
+    .telegram-icon,
+    .activity-icon {
+        -webkit-font-smoothing: subpixel-antialiased;
+    }
+}
+
+/* ===== REDUCED MOTION PREFERENCES ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .spinner {
+        animation: none;
+        border: 4px solid var(--primary-color);
+        border-top-color: transparent;
+    }
+}
+
+/* ===== DARK MODE PREFERENCES ===== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a2e;
+        --card-bg: #16213e;
+        --text-color: #ffffff;
+        --text-secondary: #a0a0c0;
+    }
+    
+    /* Ensure Telegram dark theme compatibility */
+    .telegram-theme-auto {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-color: #f5f7fa;
+        --card-bg: #ffffff;
+        --text-color: #333333;
+        --text-secondary: #666666;
+        --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .telegram-theme-auto {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+    
+    .card {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .activity-item {
+        background: rgba(0, 0, 0, 0.03);
+    }
+    
+    .stat {
+        background: rgba(0, 0, 0, 0.03);
+    }
+    
+    .bottom-nav {
+        background: #ffffff;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: white !important;
+    }
+    
+    .screen {
+        position: static !important;
+        padding: 0 !important;
+        min-height: auto !important;
+        display: block !important;
+    }
+    
+    .bottom-nav,
+    .nav-btn,
+    .btn-telegram,
+    .btn-copy,
+    .modal-close,
+    .action-badge,
+    .toast,
+    .modal {
+        display: none !important;
+    }
+    
+    .card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border: 1px solid #ddd !important;
+        background: white !important;
+        color: black !important;
+        margin-bottom: 20px !important;
+        box-shadow: none !important;
+    }
+    
+    .activity-item {
+        border: 1px solid #eee !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt !important;
+    }
+    
+    a {
+        color: #0000EE !important;
+        text-decoration: underline !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: black !important;
+    }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
+@media (hover: none) and (pointer: coarse) {
+    /* Minimum touch target size (Apple HIG) */
+    button,
+    .btn,
+    .action-card,
+    .nav-btn,
+    .btn-copy,
+    .modal-close {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Prevent zoom on input focus in iOS */
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+    
+    /* Larger hit areas for mobile */
+    .activity-item,
+    .game-item,
+    .leaderboard-item {
+        min-height: 44px;
+    }
+    
+    /* Adjust spacing for touch */
+    .actions-grid {
+        gap: 12px;
+    }
+    
+    /* Better feedback for touch */
+    .action-card:active,
+    .nav-btn:active,
+    .btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* ===== FOLDABLE DEVICES ===== */
+@media (spanning: single-fold-vertical) {
+    .container {
+        max-width: calc(100% - env(fold-width));
+        margin-left: env(fold-width);
+    }
+}
+
+/* ===== DESKTOP HOVER STATES (only when hover is supported) ===== */
+@media (hover: hover) and (pointer: fine) {
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .nav-btn:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateY(-2px);
+    }
+    
+    .btn-telegram:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+    }
+    
+    .btn-copy:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+    }
+    
+    .game-item:hover {
+        transform: translateX(5px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .leaderboard-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* ===== VERY SMALL HEIGHT DEVICES ===== */
+@media (max-height: 500px) {
+    .logo {
+        margin-bottom: 15px;
+    }
+    
+    .logo i {
+        font-size: 2rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    .tagline {
+        font-size: 0.8rem;
+    }
+    
+    .header {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .user-info {
+        margin-bottom: 10px;
+    }
+    
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .user-details h2 {
+        font-size: 1rem;
+    }
+    
+    .balance h3 {
+        font-size: 0.8rem;
+        margin-bottom: 3px;
+    }
+    
+    .coin-display {
+        font-size: 1.3rem;
+    }
+    
+    .card h3 {
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+    
+    .action-card {
+        padding: 10px;
+        min-height: 90px;
+    }
+    
+    .action-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+    
+    .action-card h4 {
+        font-size: 0.85rem;
+        margin-bottom: 2px;
+    }
+    
+    .action-card p {
+        font-size: 0.7rem;
+    }
+    
+    .bottom-nav {
+        height: 55px;
+    }
+    
+    .nav-btn i {
+        font-size: 1rem;
+    }
+    
+    .nav-btn span {
+        font-size: 0.65rem;
+    }
+}
+
+/* ===== LARGE TEXT PREFERENCES ===== */
+@media (prefers-reduced-data: no-preference) and (prefers-contrast: no-preference) {
+    @media (min-width: 768px) {
+        html {
+            font-size: 18px;
+        }
+    }
+}
+
+/* ===== DATA SAVING MODE ===== */
+@media (prefers-reduced-data: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .logo i {
+        /* Use emoji instead of font icon if possible */
+        content: "🪙";
+        font-family: sans-serif;
+    }
+    
+    .background-image,
+    .gradient-bg {
+        background: var(--bg-color) !important;
+    }
+}
+
+/* ===== CUSTOM SCROLLBAR FOR DESKTOP ===== */
+@media (min-width: 768px) {
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 5px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 5px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+    }
+}
+
+/* ===== FIX FOR IOS INPUT ZOOM ===== */
+@supports (-webkit-touch-callout: none) {
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+/* ===== FIX FOR SAFARI 100VH ===== */
+@supports (-webkit-touch-callout: none) {
+    .screen {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+@media (prefers-reduced-motion: reduce) {
+    .coin-animation,
+    .coin-pulse,
+    .float,
+    .pulse {
+        animation: none;
+    }
+}
+
+/* ===== ACCESSIBILITY: HIGH CONTRAST ===== */
+@media (prefers-contrast: high) {
+    :root {
+        --primary-color: #0066cc;
+        --secondary-color: #ffcc00;
+        --success-color: #008000;
+        --danger-color: #cc0000;
+        --warning-color: #cc6600;
+        --info-color: #0066cc;
+    }
+    
+    .card {
+        border: 2px solid var(--text-color) !important;
+    }
+    
+    button,
+    .btn {
+        border: 2px solid currentColor !important;
+    }
+    
+    input,
+    select,
+    textarea {
+        border: 2px solid currentColor !important;
+    }
+}
+
+/* ===== ORIENTATION LOCK WARNING ===== */
+.orientation-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-color);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .orientation-warning {
+        display: flex;
+    }
+    
+    .container {
+        display: none;
+    }
+}
